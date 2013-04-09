@@ -73,11 +73,13 @@ static void *alloc_frame (struct thread *, size_t size);
 static void schedule (void);
 void schedule_tail (struct thread *prev);
 static tid_t allocate_tid (void);
-/* Project 3 Prototype.02 */
+/*************************************************
+** Project 3 : Declaration of functions added.  **
+**************************************************/
 static inline unsigned int rdtsc(void);
 void insert_ready_list(struct thread *t);
 bool less_vruntime(struct list_elem *, struct list_elem *, void *);
-/***/
+/* end of Project 3*/
 
 /* Initializes the threading system by transforming the code
    that's currently running into a thread.  This cAn't work in
@@ -255,10 +257,13 @@ thread_unblock (struct thread *t)
 
   old_level = intr_disable ();
   ASSERT (t->status == THREAD_BLOCKED);
-  /* Prototype.02 */
-  // list_push_back (&ready_list, &t->elem);
+  /*************************************************
+  ** Project 3                                    **
+  ** "list_push_back (&ready_list, &t->elem);"    ** 
+  ** changed for vruntime ordering.               **
+  **************************************************/
   list_insert_ordered (&ready_list, &t->elem, less_vruntime, NULL);
-  /***/
+  /* end of Project 3 */
   t->status = THREAD_READY;
   intr_set_level (old_level);
 }
@@ -330,12 +335,13 @@ thread_yield (void)
   old_level = intr_disable ();
   if (cur != idle_thread) 
   {
-    /* Prototype.02 */
-    // list_push_back (&ready_list, &cur->elem);
-    // printf("CUR:%d %d LIST:",cur->tid, cur->vruntime); 
-    // list_print_elements(&ready_list);
+    /*************************************************
+    ** Project 3                                    **
+    ** "list_push_back (&ready_list, &cur->elem);"  ** 
+    ** changed for vruntime ordering.               **
+    **************************************************/
     insert_ready_list(cur);
-    /***/
+    /* end of Project 3*/
   }
   cur->status = THREAD_READY;
   schedule ();
@@ -479,9 +485,9 @@ is_thread (struct thread *t)
 static void
 init_thread (struct thread *t, const char *name, int priority)
 {
-  /* Prototype.02*/
+  /* Project 3 */
   struct list_elem *e;
-  /***/
+  
   ASSERT (t != NULL);
   ASSERT (PRI_MIN <= priority && priority <= PRI_MAX);
   ASSERT (name != NULL);
@@ -493,13 +499,13 @@ init_thread (struct thread *t, const char *name, int priority)
   t->priority = priority;
   t->magic = THREAD_MAGIC;
   list_push_back (&all_list, &t->allelem);
-  /* Prototype.02 */
-  /* Clear vruntime of all thread in all_list */
+  
+  /* Project 3 */
+  /* Clear vruntime of all threads in all_list */
   for (e = list_begin (&all_list); e != list_end (&all_list); e = list_next (e))
   {
     (list_entry(e, struct thread, allelem))->vruntime = 0;
-  }
-  /***/
+  } /* end of for */
 }
 
 /* Allocates a SIZE-byte frame at the top of thread T's stack and
@@ -554,7 +560,8 @@ schedule_tail (struct thread *prev)
 
   /* Mark us as running. */
   cur->status = THREAD_RUNNING;
-  /* Project 3 Prototype.02 */
+  /* Project 3 */
+  /* Save execution start time. */
   exec_start = rdtsc();
 
   /* Start new time slice. */
@@ -618,31 +625,74 @@ allocate_tid (void)
    Used by switch.S, which can't figure it out on its own. */
 uint32_t thread_stack_ofs = offsetof (struct thread, stack);
 
-/* Project 3 Prototype.02 */
+/*************************************************
+** Project 3                                    **
+*************************************************/
+
+/*************************************************
+** title : rdtsc                                **
+** arguement : none                             **
+** return : (unsigned int) system clock         **
+** Description :                                **
+** This function returns current system clock.  **
+*************************************************/
 static inline unsigned int rdtsc(void)
 {
   unsigned int hi, lo;
   asm volatile("rdtsc" : "=a"(lo), "=d"(hi));
   return lo;
-}
+} /* end of rdtsc() */
 
-static inline int p_to_w(priority)
+/*************************************************
+** title : p_to_w                               **
+** arguement : (int) priority                   **
+** return : (int) weight                        **
+** Description :                                **
+** This function returns weight for each        **
+** priority. PRI_MAX has weight 64, and PRI_MIN **
+** has weight of 1.                             **
+*************************************************/
+static inline int p_to_w(int priority)
 {
   return (64 - priority);
-}
+} /* end of p_to_w() */
 
+/*************************************************
+** title : insert_ready_list                    **
+** arguement : (structure thread *) t           **
+** return : none (struct list)ready_list        **
+** Description :                                **
+** This function calculates virtual runtime of  **
+** the argument thread, accumulates it in the   **
+** thread structure, and insert the thread in   **
+** the order of virtual runtime.                **
+*************************************************/
 void insert_ready_list(struct thread *t)
 {
   unsigned int delta = rdtsc() - exec_start;
   t->vruntime = t->vruntime + delta * p_to_w(t->priority);
   list_insert_ordered (&ready_list, &t->elem, less_vruntime, NULL);
-}
+} /* end of insert_ready_list */
 
+/*************************************************
+** title : less_vruntime                        **
+** arguement : (struct list_elem *)a_           **
+**             (struct list_elem *)b_           **
+** return : (bool) true or false                **
+** Description :                                **
+** This function determines whether the thread  **
+** occupying list element a_ has less virtual   **
+** runtime in compare of list element b_ for    **
+** 'list_insert_ordered' function.              **
+*************************************************/
 bool less_vruntime(struct list_elem *a_, struct list_elem *b_, void *aux UNUSED)
 {
   const struct thread *a = list_entry (a_, struct thread, elem);
   const struct thread *b = list_entry (b_, struct thread, elem);
   
   return a->vruntime < b->vruntime;
-}
-/***/
+} /* end of less_vrntime() */
+
+/*************************************************
+** end of Project 3                             **
+*************************************************/

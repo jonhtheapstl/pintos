@@ -88,8 +88,8 @@ struct thread
     char name[16];                      /* Name (for debugging purposes). */
     uint8_t *stack;                     /* Saved stack pointer. */
     int priority;                       /* Priority. */
-    /* Prototype.02 */
-    unsigned int vruntime;
+    /* Project 3 */
+    unsigned int vruntime;              /* Virtual runtime for WFQ Scheduler */
     /***/
     struct list_elem allelem;           /* List element for all threads list. */
 
@@ -140,7 +140,8 @@ int thread_get_nice (void);
 void thread_set_nice (int);
 int thread_get_recent_cpu (void);
 int thread_get_load_avg (void);
-/* Project 3 Prototype.02 */
+/* Project 3 */
+/* */
 bool less_vruntime(struct list_elem *a_, struct list_elem *b_, void *aux UNUSED);
 /***/
 

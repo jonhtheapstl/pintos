@@ -279,12 +279,19 @@ static void
 run_task (char **argv)
 {
   const char *task = argv[1];
+#ifdef DEBUG
+  void *aux = argv[2];
+#endif
   
   printf ("Executing '%s':\n", task);
 #ifdef USERPROG
   process_wait (process_execute (task));
 #else
+#ifdef DEBUG
+  run_test (task, aux);
+#else
   run_test (task);
+#endif
 #endif
   printf ("Execution of '%s' complete.\n", task);
 }

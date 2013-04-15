@@ -10,6 +10,9 @@
 #include "threads/palloc.h"
 #include "threads/switch.h"
 #include "threads/synch.h"
+#ifdef DEBUG
+#include "devices/timer.h"
+#endif
 #include "threads/vaddr.h"
 #ifdef USERPROG
 #include "userprog/process.h"
@@ -24,6 +27,9 @@
    that are ready to run but not actually running. */
 static struct list ready_list;
 
+#ifdef DEBUG_WAITLIST
+static struct list wait_list;
+#endif
 /* List of all processes.  Processes are added to this list
    when they are first scheduled and removed when they exit. */
 static struct list all_list;
@@ -37,8 +43,13 @@ static struct thread *initial_thread;
 /* Lock used by allocate_tid(). */
 static struct lock tid_lock;
 
-/* Project 3 Prototype.02 */
+/* Time at execution start of current thread. */
 static unsigned int exec_start;
+#ifdef DEBUG
+bool trace_scheduler;
+unsigned int sched_start, sched_count, sched_overhead, sched_ovhd_max;
+#endif
+/* end of Project 3                             */
 
 /* Stack frame for kernel_thRead(). */
 struct kernel_thread_frame 
@@ -73,14 +84,16 @@ static void *alloc_frame (struct thread *, size_t size);
 static void schedule (void);
 void schedule_tail (struct thread *prev);
 static tid_t allocate_tid (void);
-/*************************************************
-** Project 3 : Declaration of functions added.  **
-**************************************************/
 static inline unsigned int rdtsc(void);
 void insert_ready_list(struct thread *t);
+#ifdef DEBUG
+unsigned int cpu_clock(void);
+#endif
 bool less_vruntime(struct list_elem *, struct list_elem *, void *);
-/* end of Project 3*/
-
+#ifdef DEBUG_WAITLIST
+bool less_wakeup_time(struct list_elem *, struct list_elem *, void *);
+struct thread *elem_to_thread(struct list_elem *);
+#endif
 /* Initializes the threading system by transforming the code
    that's currently running into a thread.  This cAn't work in
    general and it is possible in this case only because loader.S
@@ -102,13 +115,16 @@ thread_init (void)
   lock_init (&tid_lock);
   list_init (&ready_list);
   list_init (&all_list);
-
+#ifdef DEBUG_WAITLIST
+  list_init (&wait_list);
+#endif
   /* Set up a thread structure for the running thread. */
   initial_thread = running_thread ();
   init_thread (initial_thread, "main", PRI_DEFAULT);
   initial_thread->status = THREAD_RUNNING;
   initial_thread->tid = allocate_tid ();
-  /* Prototype.02 */
+  
+  /* Assing current cpu clock to exec_start. */
   exec_start = rdtsc();
 }
 
@@ -257,17 +273,44 @@ thread_unblock (struct thread *t)
 
   old_level = intr_disable ();
   ASSERT (t->status == THREAD_BLOCKED);
-  /*************************************************
-  ** Project 3                                    **
-  ** "list_push_back (&ready_list, &t->elem);"    ** 
-  ** changed for vruntime ordering.               **
-  **************************************************/
+  /* Changed from "list_push_back (&ready_list, &t->elem);".
+     Put the current thread in thre ready list
+     in order of virtual runtime. */
   list_insert_ordered (&ready_list, &t->elem, less_vruntime, NULL);
-  /* end of Project 3 */
+
+#ifdef DEBUG_WAITLIST
+  t->wakeup_time = 0;
+#endif  
   t->status = THREAD_READY;
   intr_set_level (old_level);
 }
 
+#ifdef DEBUG_WAITLIST
+void thread_sleep (int64_t tick)
+{
+  int64_t start = timer_ticks();
+  enum intr_level old_level;
+  struct thread *t = thread_current();
+  
+  old_level = intr_disable ();
+
+  t->wakeup_time = (start + tick);
+  list_insert_ordered(&wait_list, &t->elem, less_wakeup_time, NULL);
+  
+  thread_block();
+  intr_set_level(old_level);
+}
+
+void thread_wakeup(void)
+{
+  int64_t ticks = timer_ticks();
+  while (ticks == list_entry(list_begin(&wait_list), struct thread, elem)->wakeup_time)
+  {
+    struct list_elem *e = list_pop_front(&wait_list);
+    thread_unblock(list_entry(e, struct thread, elem));
+  }
+}
+#endif
 /* Returns the name of the running thread. */
 const char *
 thread_name (void) 
@@ -335,13 +378,10 @@ thread_yield (void)
   old_level = intr_disable ();
   if (cur != idle_thread) 
   {
-    /*************************************************
-    ** Project 3                                    **
-    ** "list_push_back (&ready_list, &cur->elem);"  ** 
-    ** changed for vruntime ordering.               **
-    **************************************************/
+    /* Changed from "list_push_back (&ready_list, &cur->elem);".
+       Put the current thread in thre ready list
+       in order of virtual runtime. */
     insert_ready_list(cur);
-    /* end of Project 3*/
   }
   cur->status = THREAD_READY;
   schedule ();
@@ -485,7 +525,6 @@ is_thread (struct thread *t)
 static void
 init_thread (struct thread *t, const char *name, int priority)
 {
-  /* Project 3 */
   struct list_elem *e;
   
   ASSERT (t != NULL);
@@ -500,12 +539,11 @@ init_thread (struct thread *t, const char *name, int priority)
   t->magic = THREAD_MAGIC;
   list_push_back (&all_list, &t->allelem);
   
-  /* Project 3 */
-  /* Clear vruntime of all threads in all_list */
+  /* Clear vruntime of all threads in all_list for the fairness. */
   for (e = list_begin (&all_list); e != list_end (&all_list); e = list_next (e))
   {
     (list_entry(e, struct thread, allelem))->vruntime = 0;
-  } /* end of for */
+  }
 }
 
 /* Allocates a SIZE-byte frame at the top of thread T's stack and
@@ -560,7 +598,7 @@ schedule_tail (struct thread *prev)
 
   /* Mark us as running. */
   cur->status = THREAD_RUNNING;
-  /* Project 3 */
+  
   /* Save execution start time. */
   exec_start = rdtsc();
 
@@ -594,17 +632,31 @@ schedule_tail (struct thread *prev)
 static void
 schedule (void) 
 {
+#ifdef DEBUG
+  unsigned int delta;
+  if (trace_scheduler) sched_start = rdtsc();
+#endif    
   struct thread *cur = running_thread ();
   struct thread *next = next_thread_to_run ();
   struct thread *prev = NULL;
-
+  
   ASSERT (intr_get_level () == INTR_OFF);
   ASSERT (cur->status != THREAD_RUNNING);
   ASSERT (is_thread (next));
-
+  
   if (cur != next)
     prev = switch_threads (cur, next);
   schedule_tail (prev); 
+
+#ifdef DEBUG
+  if (trace_scheduler)
+  {
+    delta = rdtsc() - sched_start;
+    sched_overhead = sched_overhead + delta;
+    sched_count++;
+    if (delta > sched_ovhd_max) sched_ovhd_max = delta;
+  }
+#endif
 }
 
 /* Returns a tid to use for a new thread. */
@@ -625,17 +677,7 @@ allocate_tid (void)
    Used by switch.S, which can't figure it out on its own. */
 uint32_t thread_stack_ofs = offsetof (struct thread, stack);
 
-/*************************************************
-** Project 3                                    **
-*************************************************/
-
-/*************************************************
-** title : rdtsc                                **
-** arguement : none                             **
-** return : (unsigned int) system clock         **
-** Description :                                **
-** This function returns current system clock.  **
-*************************************************/
+/* Returns current system clock. */
 static inline unsigned int rdtsc(void)
 {
   unsigned int hi, lo;
@@ -643,48 +685,35 @@ static inline unsigned int rdtsc(void)
   return lo;
 } /* end of rdtsc() */
 
-/*************************************************
-** title : p_to_w                               **
-** arguement : (int) priority                   **
-** return : (int) weight                        **
-** Description :                                **
-** This function returns weight for each        **
-** priority. PRI_MAX has weight 64, and PRI_MIN **
-** has weight of 1.                             **
-*************************************************/
+#ifdef DEBUG
+unsigned int cpu_clock(void)
+{
+  return rdtsc();
+}
+#endif
+/* Returns weight for each priority. 
+   PRI_MAX has weight 64, and PRI_MIN has weight of 1. */
 static inline int p_to_w(int priority)
 {
   return (64 - priority);
 } /* end of p_to_w() */
 
-/*************************************************
-** title : insert_ready_list                    **
-** arguement : (structure thread *) t           **
-** return : none (struct list)ready_list        **
-** Description :                                **
-** This function calculates virtual runtime of  **
-** the argument thread, accumulates it in the   **
-** thread structure, and insert the thread in   **
-** the order of virtual runtime.                **
-*************************************************/
+/* Calculates virtual runtime of the argument thread, 
+   accumulates it in the thread structure, and insert 
+   the thread in the order of virtual runtime. */
 void insert_ready_list(struct thread *t)
 {
   unsigned int delta = rdtsc() - exec_start;
   t->vruntime = t->vruntime + delta * p_to_w(t->priority);
+#ifdef DEBUG  
+  t->actual_runtime = t->actual_runtime + delta * (int)trace_scheduler;
+#endif
   list_insert_ordered (&ready_list, &t->elem, less_vruntime, NULL);
 } /* end of insert_ready_list */
 
-/*************************************************
-** title : less_vruntime                        **
-** arguement : (struct list_elem *)a_           **
-**             (struct list_elem *)b_           **
-** return : (bool) true or false                **
-** Description :                                **
-** This function determines whether the thread  **
-** occupying list element a_ has less virtual   **
-** runtime in compare of list element b_ for    **
-** 'list_insert_ordered' function.              **
-*************************************************/
+/* Determines whether the thread occupying list element
+   a_ has less virtual runtime in compare of list element
+   b_ for the 'list_insert_ordered' function. */
 bool less_vruntime(struct list_elem *a_, struct list_elem *b_, void *aux UNUSED)
 {
   const struct thread *a = list_entry (a_, struct thread, elem);
@@ -693,6 +722,20 @@ bool less_vruntime(struct list_elem *a_, struct list_elem *b_, void *aux UNUSED)
   return a->vruntime < b->vruntime;
 } /* end of less_vrntime() */
 
-/*************************************************
-** end of Project 3                             **
-*************************************************/
+#ifdef DEBUG_WAITLIST
+/* Determines whether the thread occupying list element
+   a_ has less virtual runtime in compare of list element
+   b_ for the 'list_insert_ordered' function. */
+bool less_wakeup_time(struct list_elem *a_, struct list_elem *b_, void *aux UNUSED)
+{
+  const struct thread *a = list_entry (a_, struct thread, elem);
+  const struct thread *b = list_entry (b_, struct thread, elem);
+  
+  return a->wakeup_time < b->wakeup_time;
+} /* end of less_vrntime() */
+
+struct thread *elem_to_thread(struct list_elem *e)
+{
+  return list_entry(e, struct thread, elem);
+}
+#endif

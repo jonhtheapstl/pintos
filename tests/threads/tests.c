@@ -38,20 +38,33 @@ static const struct test tests[] =
     {"mlfqs-nice-2", test_mlfqs_nice_2},
     {"mlfqs-nice-10", test_mlfqs_nice_10},
     {"mlfqs-block", test_mlfqs_block},
+    {"wfq-scheduler", test_wfq_scheduler},
   };
 
 static const char *test_name;
+#ifdef DEBUG
+void *argument;
+#endif
 
 /* Runs the test named NAME. */
+#ifndef DEBUG
 void
 run_test (const char *name) 
+#else
+void
+run_test (const char *name, void* aux)
+#endif
 {
   const struct test *t;
+#ifdef DEBUG
+  argument = aux;
+#endif
 
   for (t = tests; t < tests + sizeof tests / sizeof *tests; t++)
     if (!strcmp (name, t->name))
       {
         test_name = name;
+
         msg ("begin");
         t->function ();
         msg ("end");

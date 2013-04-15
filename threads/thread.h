@@ -88,9 +88,14 @@ struct thread
     char name[16];                      /* Name (for debugging purposes). */
     uint8_t *stack;                     /* Saved stack pointer. */
     int priority;                       /* Priority. */
-    /* Project 3 */
+
     unsigned int vruntime;              /* Virtual runtime for WFQ Scheduler */
-    /***/
+#ifdef DEBUG
+    unsigned int actual_runtime;
+#endif
+#ifdef DEBUG_WAITLIST
+    unsigned int wakeup_time;
+#endif
     struct list_elem allelem;           /* List element for all threads list. */
 
     /* Shared between thread.c and synch.c. */
@@ -104,6 +109,11 @@ struct thread
     /* Owned by thread.c. */
     unsigned magic;                     /* Detects stack overflow. */
   };
+  
+#ifdef DEBUG
+bool trace_scheduler;
+extern unsigned int sched_start, sched_count, sched_overhead, sched_ovhd_max;
+#endif
 
 /* If false (default), use round-robin scheduler.
    If true, use multi-level feedback queue scheduler.
@@ -121,7 +131,10 @@ tid_t thread_create (const char *name, int priority, thread_func *, void *);
 
 void thread_block (void);
 void thread_unblock (struct thread *);
-
+#ifdef DEBUG_WAITLIST
+void thread_sleep(int64_t ticks);
+void thread_wakeup(void);
+#endif
 struct thread *thread_current (void);
 tid_t thread_tid (void);
 const char *thread_name (void);
@@ -140,9 +153,14 @@ int thread_get_nice (void);
 void thread_set_nice (int);
 int thread_get_recent_cpu (void);
 int thread_get_load_avg (void);
-/* Project 3 */
-/* */
-bool less_vruntime(struct list_elem *a_, struct list_elem *b_, void *aux UNUSED);
-/***/
 
+#ifdef DEBUG
+unsigned int cpu_clock(void);
+#endif
+/* Determines whether thread has less virtual rumtime than the other. */
+bool less_vruntime(struct list_elem *a_, struct list_elem *b_, void *aux UNUSED);
+#ifdef DEBUG_WAITLIST
+bool less_wakeup_time(struct list_elem *, struct list_elem *, void *);
+struct thread *elem_to_thread(struct list_elem *);
+#endif
 #endif /* threads/thread.h */

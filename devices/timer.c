@@ -96,13 +96,19 @@ timer_elapsed (int64_t then)
 /* Sleeps for approximately TICKS timer ticks.  Interrupts must
    be turned on. */
 void
-timer_sleep (int64_t ticks) 
+timer_sleep (int64_t tick) 
 {
+#ifndef DEBUG_WAITLIST
   int64_t start = timer_ticks ();
 
   ASSERT (intr_get_level () == INTR_ON);
-  while (timer_elapsed (start) < ticks) 
+  while (timer_elapsed (start) < tick) 
     thread_yield ();
+#else
+  ASSERT (intr_get_level () == INTR_ON);
+  
+  thread_sleep(tick);
+#endif
 }
 
 /* Sleeps for approximately MS milliseconds.  Interrupts must be
@@ -181,6 +187,9 @@ timer_interrupt (struct intr_frame *args UNUSED)
 {
   ticks++;
   thread_tick ();
+#ifdef DEBUG_WAITLIST  
+  thread_wakeup();
+#endif  
 }
 
 /* Returns true if LOOPS iterations waits for more than one timer

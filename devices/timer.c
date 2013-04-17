@@ -8,6 +8,7 @@
 #include "threads/synch.h"
 #include "threads/thread.h"
   
+  
 /* See [8254] for hardware details of the 8254 timer chip. */
 
 #if TIMER_FREQ < 19
@@ -23,6 +24,7 @@ static int64_t ticks;
 /* Number of loops per timer tick.
    Initialized by timer_calibrate(). */
 static unsigned loops_per_tick;
+static struct list sleep_list;
 
 static intr_handler_func timer_interrupt;
 static bool too_many_loops (unsigned loops);
@@ -43,6 +45,8 @@ timer_init (void)
   outb (0x43, 0x34);    /* CW: counter 0, LSB then MSB, mode 2, binary. */
   outb (0x40, count & 0xff);
   outb (0x40, count >> 8);
+
+  list_init(&sleep_list);
 
   intr_register_ext (0x20, timer_interrupt, "8254 Timer");
 }
@@ -92,23 +96,40 @@ timer_elapsed (int64_t then)
 {
   return timer_ticks () - then;
 }
+static bool less_wakeup (const struct list_elem* a_, 
+						 const struct list_elem* b_,
+						 void* aux UNUSED)
+{
+	const struct thread *a = list_entry(a_, struct thread, elem);
+	const struct thread *b = list_entry(b_, struct thread, elem);
+	return (a->ticks_to_wake) < (b->ticks_to_wake);
+}
 
 /* Sleeps for approximately TICKS timer ticks.  Interrupts must
    be turned on. */
 void
-timer_sleep (int64_t tick) 
+timer_sleep (int64_t ticks) 
 {
-#ifndef DEBUG_WAITLIST
   int64_t start = timer_ticks ();
-
+/*
   ASSERT (intr_get_level () == INTR_ON);
-  while (timer_elapsed (start) < tick) 
+  while (timer_elapsed (start) < ticks) 
     thread_yield ();
-#else
-  ASSERT (intr_get_level () == INTR_ON);
+*/
+  struct thread *cur = thread_current ();
+  enum intr_level old_level;
   
-  thread_sleep(tick);
+  old_level = intr_disable ();										//interrupt off
+  cur->ticks_to_wake = start + ticks;								//waiting time
+#ifdef DEBUG
+  start_output(&o_sleep);
 #endif
+  list_insert_ordered (&sleep_list, &cur->elem, less_wakeup, NULL);	//ordered insertion
+#ifdef DEBUG
+  record_result(&o_sleep);
+#endif
+  thread_block();													//interrupt must be off
+  intr_set_level (old_level);
 }
 
 /* Sleeps for approximately MS milliseconds.  Interrupts must be
@@ -133,6 +154,20 @@ void
 timer_nsleep (int64_t ns) 
 {
   real_time_sleep (ns, 1000 * 1000 * 1000);
+}
+
+void
+timer_wakeup (void)
+{
+	struct thread *temp;
+	while(list_size (&sleep_list)){
+		temp = list_entry (list_front (&sleep_list), struct thread, elem);
+		if (ticks >= temp -> ticks_to_wake){
+			list_pop_front (&sleep_list);
+			thread_unblock(temp);
+		}
+		else break;
+	}
 }
 
 /* Busy-waits for approximately MS milliseconds.  Interrupts need
@@ -186,10 +221,8 @@ static void
 timer_interrupt (struct intr_frame *args UNUSED)
 {
   ticks++;
+  timer_wakeup ();
   thread_tick ();
-#ifdef DEBUG_WAITLIST  
-  thread_wakeup();
-#endif  
 }
 
 /* Returns true if LOOPS iterations waits for more than one timer

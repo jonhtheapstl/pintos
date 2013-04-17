@@ -27,9 +27,6 @@
    that are ready to run but not actually running. */
 static struct list ready_list;
 
-#ifdef DEBUG_WAITLIST
-static struct list wait_list;
-#endif
 /* List of all processes.  Processes are added to this list
    when they are first scheduled and removed when they exit. */
 static struct list all_list;
@@ -47,7 +44,8 @@ static struct lock tid_lock;
 static unsigned int exec_start;
 #ifdef DEBUG
 bool trace_scheduler;
-unsigned int sched_start, sched_count, sched_overhead, sched_ovhd_max;
+int total_weight;
+struct test_output o_sched, o_ready, o_sleep;
 #endif
 /* end of Project 3                             */
 
@@ -86,13 +84,15 @@ void schedule_tail (struct thread *prev);
 static tid_t allocate_tid (void);
 static inline unsigned int rdtsc(void);
 void insert_ready_list(struct thread *t);
+bool less_vruntime(struct list_elem *, struct list_elem *, void *);
 #ifdef DEBUG
 unsigned int cpu_clock(void);
-#endif
-bool less_vruntime(struct list_elem *, struct list_elem *, void *);
-#ifdef DEBUG_WAITLIST
-bool less_wakeup_time(struct list_elem *, struct list_elem *, void *);
-struct thread *elem_to_thread(struct list_elem *);
+static inline void init_test_output(void);
+inline void start_output(struct test_output *);
+inline void record_result(struct test_output *);
+inline int p_to_w(int priority);
+#else
+static inline int p_to_w(int priority);
 #endif
 /* Initializes the threading system by transforming the code
    that's currently running into a thread.  This cAn't work in
@@ -115,15 +115,15 @@ thread_init (void)
   lock_init (&tid_lock);
   list_init (&ready_list);
   list_init (&all_list);
-#ifdef DEBUG_WAITLIST
-  list_init (&wait_list);
-#endif
+
   /* Set up a thread structure for the running thread. */
   initial_thread = running_thread ();
   init_thread (initial_thread, "main", PRI_DEFAULT);
   initial_thread->status = THREAD_RUNNING;
   initial_thread->tid = allocate_tid ();
-  
+#ifdef DEBUG
+  init_test_output();
+#endif  
   /* Assing current cpu clock to exec_start. */
   exec_start = rdtsc();
 }
@@ -276,41 +276,18 @@ thread_unblock (struct thread *t)
   /* Changed from "list_push_back (&ready_list, &t->elem);".
      Put the current thread in thre ready list
      in order of virtual runtime. */
+#ifdef DEBUG
+  if (trace_scheduler) start_output(&o_ready);
+#endif   
   list_insert_ordered (&ready_list, &t->elem, less_vruntime, NULL);
-
-#ifdef DEBUG_WAITLIST
-  t->wakeup_time = 0;
-#endif  
+#ifdef DEBUG
+  if (trace_scheduler) record_result(&o_ready);
+#endif 
+  
   t->status = THREAD_READY;
   intr_set_level (old_level);
 }
 
-#ifdef DEBUG_WAITLIST
-void thread_sleep (int64_t tick)
-{
-  int64_t start = timer_ticks();
-  enum intr_level old_level;
-  struct thread *t = thread_current();
-  
-  old_level = intr_disable ();
-
-  t->wakeup_time = (start + tick);
-  list_insert_ordered(&wait_list, &t->elem, less_wakeup_time, NULL);
-  
-  thread_block();
-  intr_set_level(old_level);
-}
-
-void thread_wakeup(void)
-{
-  int64_t ticks = timer_ticks();
-  while (ticks == list_entry(list_begin(&wait_list), struct thread, elem)->wakeup_time)
-  {
-    struct list_elem *e = list_pop_front(&wait_list);
-    thread_unblock(list_entry(e, struct thread, elem));
-  }
-}
-#endif
 /* Returns the name of the running thread. */
 const char *
 thread_name (void) 
@@ -381,7 +358,13 @@ thread_yield (void)
     /* Changed from "list_push_back (&ready_list, &cur->elem);".
        Put the current thread in thre ready list
        in order of virtual runtime. */
+#ifdef DEBUG
+    if (trace_scheduler) start_output(&o_ready);
+#endif    
     insert_ready_list(cur);
+#ifdef DEBUG
+    if (trace_scheduler) record_result(&o_ready);
+#endif 
   }
   cur->status = THREAD_READY;
   schedule ();
@@ -544,6 +527,12 @@ init_thread (struct thread *t, const char *name, int priority)
   {
     (list_entry(e, struct thread, allelem))->vruntime = 0;
   }
+  
+  exec_start = rdtsc();
+#ifdef DEBUG
+  t->ste_max = 0;
+  t->ste_min = 50000;
+#endif
 }
 
 /* Allocates a SIZE-byte frame at the top of thread T's stack and
@@ -633,8 +622,7 @@ static void
 schedule (void) 
 {
 #ifdef DEBUG
-  unsigned int delta;
-  if (trace_scheduler) sched_start = rdtsc();
+  if (trace_scheduler) start_output(&o_sched);
 #endif    
   struct thread *cur = running_thread ();
   struct thread *next = next_thread_to_run ();
@@ -649,13 +637,7 @@ schedule (void)
   schedule_tail (prev); 
 
 #ifdef DEBUG
-  if (trace_scheduler)
-  {
-    delta = rdtsc() - sched_start;
-    sched_overhead = sched_overhead + delta;
-    sched_count++;
-    if (delta > sched_ovhd_max) sched_ovhd_max = delta;
-  }
+  if (trace_scheduler) record_result(&o_sched);
 #endif
 }
 
@@ -690,12 +672,51 @@ unsigned int cpu_clock(void)
 {
   return rdtsc();
 }
+
+static inline void init_test_output(void)
+{
+  o_ready.max = 0;
+  o_ready.min = 50000;
+  o_sleep.max = 0;
+  o_sleep.min = 50000;
+  o_sched.max = 0;
+  o_sched.min = 50000;
+}
+
+inline void start_output(struct test_output *o)
+{
+  o->start = rdtsc();
+}
+
+inline void record_result(struct test_output *o)
+{
+  o->delta = rdtsc() - o->start;
+  o->total = o->total + o->delta;
+  o->count = o->count + 1;
+  o->max = o->delta > o->max ? o->delta : o->max;
+  o->min = o->delta < o->min ? o->delta : o->min;
+}
+
+struct list *get_ready_list(void)
+{
+  return &ready_list;
+}
 #endif
 /* Returns weight for each priority. 
    PRI_MAX has weight 64, and PRI_MIN has weight of 1. */
-static inline int p_to_w(int priority)
+inline int p_to_w(int priority)
 {
-  return (64 - priority);
+  const int priority_to_weight[64] = 
+    { 2560, 2344, 2147, 1966, 1800, 1649, 1510, 1382, 
+      1266, 1159, 1062, 972,  890,  815,  747,  684,
+      626,  573,  525,  481,  440,  403,  369,  338,
+      310,  284,  260,  238,  218,  199,  183,  167,
+      153,  140,  128,  118,  108,  99,   90,   83,
+      76,   69,   63,   58,   53,   49,   45,   41,
+      37,   34,   31,   29,   26,   24,   22,   20,   
+      19,   17,   16,   14,   13,   12,   11,   10};
+    
+  return priority_to_weight[priority];
 } /* end of p_to_w() */
 
 /* Calculates virtual runtime of the argument thread, 
@@ -704,9 +725,31 @@ static inline int p_to_w(int priority)
 void insert_ready_list(struct thread *t)
 {
   unsigned int delta = rdtsc() - exec_start;
+  int error;
+  struct list_elem *e;
+  struct thread *t_;
+  
   t->vruntime = t->vruntime + delta * p_to_w(t->priority);
 #ifdef DEBUG  
-  t->actual_runtime = t->actual_runtime + delta * (int)trace_scheduler;
+  if (trace_scheduler)
+  {
+    t->actual_runtime = t->actual_runtime + delta;
+    t->gps_time = t->gps_time + delta * (p_to_w(PRI_MIN) / p_to_w(t->priority)) / total_weight;
+    error = (t->gps_time - t->actual_runtime);
+    error = (error >= 0) ? error : error * (-1);
+    t->ste_max = (unsigned int)error > t->ste_max ? error : t->ste_max;
+    t->ste_min = (unsigned int)error < t->ste_min ? error : t->ste_min;
+    
+    for (e = list_begin(&ready_list) ; e != list_end(&ready_list) ; e = list_next(e))
+    {
+      t_ = list_entry(e, struct thread, elem);
+      t_->gps_time = t_->gps_time + delta * (p_to_w(PRI_MIN) / p_to_w(t_->priority)) / total_weight;
+      error = (t_->gps_time - t_->actual_runtime);
+      error = (error >= 0) ? error : error * (-1);
+      t_->ste_max = (unsigned int)error > t_->ste_max ? error : t_->ste_max;
+      t_->ste_min = (unsigned int)error < t_->ste_min ? error : t_->ste_min;
+    }
+  }
 #endif
   list_insert_ordered (&ready_list, &t->elem, less_vruntime, NULL);
 } /* end of insert_ready_list */
@@ -721,21 +764,3 @@ bool less_vruntime(struct list_elem *a_, struct list_elem *b_, void *aux UNUSED)
   
   return a->vruntime < b->vruntime;
 } /* end of less_vrntime() */
-
-#ifdef DEBUG_WAITLIST
-/* Determines whether the thread occupying list element
-   a_ has less virtual runtime in compare of list element
-   b_ for the 'list_insert_ordered' function. */
-bool less_wakeup_time(struct list_elem *a_, struct list_elem *b_, void *aux UNUSED)
-{
-  const struct thread *a = list_entry (a_, struct thread, elem);
-  const struct thread *b = list_entry (b_, struct thread, elem);
-  
-  return a->wakeup_time < b->wakeup_time;
-} /* end of less_vrntime() */
-
-struct thread *elem_to_thread(struct list_elem *e)
-{
-  return list_entry(e, struct thread, elem);
-}
-#endif

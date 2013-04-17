@@ -1,0 +1,20 @@
+print "testInfo"
+print list_size(&ready_list)
+print start_test
+print stop_test
+print "threadInfo"
+set $e=list_front(&ready_list)
+while($e != list_end(&ready_list))
+	set $t = elem_to_thread($e)
+	print $t->tid
+	print $t->priority
+	print $t->vruntime
+	print $t->actual_runtime
+	set $e = list_next($e)
+end
+print "schedInfo"
+print o_sched
+print "readyListInfo"
+print o_ready
+print "waitListInfo"
+print o_wait

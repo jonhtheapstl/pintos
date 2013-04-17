@@ -47,12 +47,12 @@ void *argument;
 #endif
 
 /* Runs the test named NAME. */
-#ifndef DEBUG
-void
-run_test (const char *name) 
-#else
+#ifdef DEBUG
 void
 run_test (const char *name, void* aux)
+#else
+void
+run_test (const char *name) 
 #endif
 {
   const struct test *t;
@@ -64,7 +64,6 @@ run_test (const char *name, void* aux)
     if (!strcmp (name, t->name))
       {
         test_name = name;
-
         msg ("begin");
         t->function ();
         msg ("end");

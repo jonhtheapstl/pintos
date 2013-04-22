@@ -1,7 +1,3 @@
-/* Creates N threads, each of which sleeps a different, fixed
-   duration, M times.  Records the wake-up order and verifies
-   that it is valid. */
-
 #include <stdio.h>
 #include "tests/threads/tests.h"
 #include "threads/init.h"

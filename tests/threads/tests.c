@@ -38,7 +38,9 @@ static const struct test tests[] =
     {"mlfqs-nice-2", test_mlfqs_nice_2},
     {"mlfqs-nice-10", test_mlfqs_nice_10},
     {"mlfqs-block", test_mlfqs_block},
+#ifdef DEBUG
     {"wfq-scheduler", test_wfq_scheduler},
+#endif
   };
 
 static const char *test_name;

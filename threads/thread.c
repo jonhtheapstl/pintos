@@ -701,7 +701,7 @@ struct list *get_ready_list(void)
 {
   return &ready_list;
 }
-#endif
+
 /* Returns weight for each priority. 
    PRI_MAX has weight 64, and PRI_MIN has weight of 1. */
 inline int p_to_w(int priority)
@@ -718,7 +718,24 @@ inline int p_to_w(int priority)
     
   return priority_to_weight[priority];
 } /* end of p_to_w() */
-
+#else
+/* Returns weight for each priority. 
+   PRI_MAX has weight 64, and PRI_MIN has weight of 1. */
+static inline int p_to_w(int priority)
+{
+  const int priority_to_weight[64] = 
+    { 2560, 2344, 2147, 1966, 1800, 1649, 1510, 1382, 
+      1266, 1159, 1062, 972,  890,  815,  747,  684,
+      626,  573,  525,  481,  440,  403,  369,  338,
+      310,  284,  260,  238,  218,  199,  183,  167,
+      153,  140,  128,  118,  108,  99,   90,   83,
+      76,   69,   63,   58,   53,   49,   45,   41,
+      37,   34,   31,   29,   26,   24,   22,   20,   
+      19,   17,   16,   14,   13,   12,   11,   10};
+    
+  return priority_to_weight[priority];
+} /* end of p_to_w() */
+#endif
 /* Calculates virtual runtime of the argument thread, 
    accumulates it in the thread structure, and insert 
    the thread in the order of virtual runtime. */

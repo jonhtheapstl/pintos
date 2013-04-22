@@ -168,9 +168,9 @@ unsigned int cpu_clock(void);
 inline void start_output(struct test_output *);
 inline void record_result(struct test_output *);
 struct list *get_ready_list(void);
+inline int p_to_w(int priority);
 #endif
 
 /* Determines whether thread has less virtual rumtime than the other. */
-inline int p_to_w(int priority);
 bool less_vruntime(struct list_elem *a_, struct list_elem *b_, void *aux UNUSED);
 #endif /* threads/thread.h */

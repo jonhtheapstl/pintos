@@ -36,7 +36,9 @@ tests/threads_SRC += tests/threads/mlfqs-load-avg.c
 tests/threads_SRC += tests/threads/mlfqs-recent-1.c
 tests/threads_SRC += tests/threads/mlfqs-fair.c
 tests/threads_SRC += tests/threads/mlfqs-block.c
+ifeq ($(DEBUG), 1)
 tests/threads_SRC += tests/threads/wfq-scheduler.c
+endif
 
 MLFQS_OUTPUTS = 				\
 tests/threads/mlfqs-load-1.output		\

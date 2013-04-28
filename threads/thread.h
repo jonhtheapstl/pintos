@@ -88,6 +88,15 @@ struct thread
     char name[16];                      /* Name (for debugging purposes). */
     uint8_t *stack;                     /* Saved stack pointer. */
     int priority;                       /* Priority. */
+
+    unsigned int vruntime;              /* Virtual runtime for WFQ Scheduler */
+#ifdef DEBUG
+    unsigned int actual_runtime;
+    unsigned int gps_time;
+    unsigned int ste_max;               /* Maximum Service Time Error */
+    unsigned int ste_min;               /* Minimum Service Time Error */
+#endif
+    int64_t ticks_to_wake;
     struct list_elem allelem;           /* List element for all threads list. */
 
     /* Shared between thread.c and synch.c. */
@@ -101,6 +110,22 @@ struct thread
     /* Owned by thread.c. */
     unsigned magic;                     /* Detects stack overflow. */
   };
+  
+#ifdef DEBUG
+typedef struct test_output
+{
+  int count;
+  unsigned int start;
+  unsigned int delta;
+  unsigned int total;
+  unsigned int max;
+  unsigned int min;
+};
+
+bool trace_scheduler;
+extern int total_weight;
+extern struct test_output o_sched, o_ready, o_wait, o_sleep;
+#endif
 
 /* If false (default), use round-robin scheduler.
    If true, use multi-level feedback queue scheduler.
@@ -138,4 +163,14 @@ void thread_set_nice (int);
 int thread_get_recent_cpu (void);
 int thread_get_load_avg (void);
 
+#ifdef DEBUG
+unsigned int cpu_clock(void);
+inline void start_output(struct test_output *);
+inline void record_result(struct test_output *);
+struct list *get_ready_list(void);
+inline int p_to_w(int priority);
+#endif
+
+/* Determines whether thread has less virtual rumtime than the other. */
+bool less_vruntime(struct list_elem *a_, struct list_elem *b_, void *aux UNUSED);
 #endif /* threads/thread.h */

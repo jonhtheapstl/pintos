@@ -1,0 +1,36 @@
+Kernel command line: run wfq-scheduler 5
+Pintos booting with 4,096 kB RAM...
+372 pages available in kernel pool.
+372========================================================================
+                       Bochs x86 Emulator 2.4.5
+              Build from CVS snapshot, on April 25, 2010
+========================================================================
+Waiting for gdb connection on port 1234
+Connected to 127.0.0.1
+                              
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+tid,priority,vruntime,runtime,expected,error,gps,ste_max,ste_min
+5,50,46824570,1510470,1622947,112477,1565302,54832,165
+6,56,47384841,2493939,2652134,158195,2557990,79673,17104
+4,54,47386680,2153940,2295877,141937,2214381,70349,10969
+7,23,51013326,150927,138544,-12383,133589,41244,365
+3,19,53714713,111673,98960,-12713,95394,39395,91
+
+Number of threads : 5
+Test Duration     : 6808464 (9192774 to 16001238)
+Total Error       : 387513
+schedule (total/count/Min/Max) : 51466 / 168 / 285 / 307
+Readylist(total/count/Min/Max) : 327503 / 173 / 145 / 2390
+Waitlist (total/count/Min/Max) : 132 / 1 / 132 / 132
+(wfq-scheduler) end
+Execution of 'wfq-scheduler' complete.
+Kernel PANIC at ../../threads/init.c:334 in run_actions(): unknown action `5' (use -h for help)
+Call stack: 0xc01099b1 0xc01006fb 0xc0100261.
+The `backtrace' program can make call stacks useful.
+Read "Backtraces" in the "Debugging Tools" chapter
+of the Pintos documentation for more information.

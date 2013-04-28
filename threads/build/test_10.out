@@ -1,0 +1,41 @@
+Kernel command line: run wfq-scheduler 10
+Pintos booting with 4,096 kB RAM...
+372 pages available in kernel pool.
+37========================================================================
+                       Bochs x86 Emulator 2.4.5
+              Build from CVS snapshot, on April 25, 2010
+========================================================================
+Waiting for gdb connection on port 1234
+Connected to 127.0.0.1
+                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+tid,priority,vruntime,runtime,expected,error,gps,ste_max,ste_min
+4,54,63055366,2866153,3245433,379280,2975775,109622,1029
+6,56,63366824,3335096,3749035,413939,3437562,110380,21146
+5,50,64058586,2066406,2294186,227780,2103495,59357,2546
+10,48,64358725,1739425,1930473,191048,1770056,58116,1387
+8,26,65734500,252825,251800,-1025,230777,46367,65
+11,31,66453141,397923,419668,21745,384701,31711,47
+3,19,68844568,143128,139889,-3239,128176,39043,191
+9,19,69565587,144627,139889,-4738,128176,38918,91
+7,23,72989410,215945,195845,-20100,179435,42853,195
+12,14,80888895,108285,83933,-24352,76851,42710,473
+
+Number of threads : 10
+Test Duration     : 12450156 (9453157 to 21903313)
+Total Error       : 1180338
+schedule (total/count/Min/Max) : 93262 / 304 / 285 / 307
+Readylist(total/count/Min/Max) : 1076590 / 314 / 145 / 4270
+Waitlist (total/count/Min/Max) : 132 / 1 / 132 / 132
+(wfq-scheduler) end
+Execution of 'wfq-scheduler' complete.
+Kernel PANIC at ../../threads/init.c:334 in run_actions(): unknown action `10' (use -h for help)
+Call stack: 0xc01099b1 0xc01006fb 0xc0100261.
+The `backtrace' program can make call stacks useful.
+Read "Backtraces" in the "Debugging Tools" chapter
+of the Pintos documentation for more information.

@@ -1,0 +1,13 @@
+Kernel command line: run wfq-scheduler
+Pintos booting with 4,096 kB RAM...
+372 pages available in kernel pool.
+372 pages available in user pool.
+Calibrating timer...  102,400 loops/s.
+Boot complete.
+Executing 'wfq-scheduler':
+(wfq-scheduler) begin
+Kernel PANIC at ../../lib/stdlib.c:15 in atoi(): assertion `s != NULL' failed.
+Call stack: 0xc01099b1 0xc0108097 0xc010ee56 0xc010bf1b 0xc010069e 0xc010078a 0xc0100261.
+The `backtrace' program can make call stacks useful.
+Read "Backtraces" in the "Debugging Tools" chapter
+of the Pintos documentation for more information.

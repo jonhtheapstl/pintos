@@ -1,0 +1,4 @@
+echo "../../utils/pintos --gdb -- run wfq-scheduler $1 < /dev/null 2>test_$1.err >tes$
+"
+../../utils/pintos --gdb -- run wfq-scheduler $1 < /dev/null 2>test_$1.err >test_$1.out
+

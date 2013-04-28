@@ -1,7 +1,12 @@
 #ifndef TESTS_THREADS_TESTS_H
 #define TESTS_THREADS_TESTS_H
 
+#ifdef DEBUG
+void run_test (const char *, void *);
+extern void *argument;
+#else
 void run_test (const char *);
+#endif
 
 typedef void test_func (void);
 
@@ -32,6 +37,9 @@ extern test_func test_mlfqs_fair_20;
 extern test_func test_mlfqs_nice_2;
 extern test_func test_mlfqs_nice_10;
 extern test_func test_mlfqs_block;
+#ifdef DEBUG
+extern test_func test_wfq_scheduler;
+#endif
 
 void msg (const char *, ...);
 void fail (const char *, ...);

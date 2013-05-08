@@ -9,7 +9,7 @@ int
 main (int argc, char *argv[]) 
 {
   int in_fd, out_fd;
-
+  
   if (argc != 3) 
     {
       printf ("usage: cp OLD NEW\n");

@@ -1,0 +1,1816 @@
+00000000000i[     ] Bochs x86 Emulator 2.4.5
+00000000000i[     ]   Build from CVS snapshot, on April 25, 2010
+00000000000i[     ] System configuration
+00000000000i[     ]   processors: 1 (cores=1, HT threads=1)
+00000000000i[     ]   A20 line support: yes
+00000000000i[     ] CPU configuration
+00000000000i[     ]   level: 6
+00000000000i[     ]   SMP support: no
+00000000000i[     ]   APIC support: yes
+00000000000i[     ]   FPU support: yes
+00000000000i[     ]   MMX support: yes
+00000000000i[     ]   3dnow! support: no
+00000000000i[     ]   SEP support: yes
+00000000000i[     ]   SSE support: sse2
+00000000000i[     ]   XSAVE support: no
+00000000000i[     ]   AES support: no
+00000000000i[     ]   MOVBE support: no
+00000000000i[     ]   x86-64 support: no
+00000000000i[     ]   MWAIT support: no
+00000000000i[     ]   VMX support: no
+00000000000i[     ] Optimization configuration
+00000000000i[     ]   RepeatSpeedups support: no
+00000000000i[     ]   Trace cache support: no
+00000000000i[     ]   Fast function calls: no
+00000000000i[     ] Devices configuration
+00000000000i[     ]   ACPI support: no
+00000000000i[     ]   NE2000 support: no
+00000000000i[     ]   PCI support: no, enabled=no
+00000000000i[     ]   SB16 support: no
+00000000000i[     ]   USB support: no
+00000000000i[     ]   VGA extension support: vbe 
+00000000000i[MEM0 ] allocated memory at 0xb6dc0008. after alignment, vector=0xb6dc1000
+00000000000i[MEM0 ] 4.00MB
+00000000000i[MEM0 ] mem block size = 0x00100000, blocks=4
+00000000000i[MEM0 ] rom at 0xfffe0000/131072 ('/usr/local/share/bochs/BIOS-bochs-latest')
+00000000000i[MEM0 ] rom at 0xc0000/40448 ('/usr/local/share/bochs/VGABIOS-lgpl-latest')
+00000000000i[CMOS ] Using specified time for initial clock
+00000000000i[CMOS ] Setting initial clock to: Thu Jan  1 09:00:00 1970 (time0=0)
+00000000000i[DMA  ] channel 4 used by cascade
+00000000000i[DMA  ] channel 2 used by Floppy Drive
+00000000000i[VGA  ] interval=50000
+00000000000i[MEM0 ] Register memory access handlers: 0x000a0000 - 0x000bffff
+00000000000i[XGUI ] test_alloc_colors: 16 colors available out of 16 colors tried
+00000000000i[XGUI ] font 8 wide x 16 high, display depth = 24
+00000000000i[MEM0 ] Register memory access handlers: 0xe0000000 - 0xe0ffffff
+00000000000i[VGA  ] VBE Bochs Display Extension Enabled
+00000000000i[     ] init_dev of 'unmapped' plugin device by virtual method
+00000000000i[     ] init_dev of 'biosdev' plugin device by virtual method
+00000000000i[     ] init_dev of 'speaker' plugin device by virtual method
+00000000000i[SPEAK] Failed to open /dev/console: Resource temporarily unavailable
+00000000000i[SPEAK] Deactivating beep on console
+00000000000i[     ] init_dev of 'extfpuirq' plugin device by virtual method
+00000000000i[     ] init_dev of 'ioapic' plugin device by virtual method
+00000000000i[IOAP ] initializing I/O APIC
+00000000000i[MEM0 ] Register memory access handlers: 0xfec00000 - 0xfec00fff
+00000000000i[     ] init_dev of 'keyboard' plugin device by virtual method
+00000000000i[KBD  ] will paste characters every 1000 keyboard ticks
+00000000000i[     ] init_dev of 'harddrv' plugin device by virtual method
+00000000000i[HD   ] HD on ata0-0: '/tmp/e6B4rupO1y.dsk' 'flat' mode 
+00000000000i[HD   ] HD on ata0-1: 'fs.dsk' 'flat' mode 
+00000000000i[HD   ] Using boot sequence disk, none, none
+00000000000i[HD   ] Floppy boot signature check is enabled
+00000000000i[     ] init_dev of 'serial' plugin device by virtual method
+00000000000i[SER  ] com1 at 0x03f8 irq 4
+00000000000i[     ] init_dev of 'parallel' plugin device by virtual method
+00000000000i[PAR  ] parallel port 1 at 0x0378 irq 7
+00000000000i[     ] register state of 'unmapped' plugin device by virtual method
+00000000000i[     ] register state of 'biosdev' plugin device by virtual method
+00000000000i[     ] register state of 'speaker' plugin device by virtual method
+00000000000i[     ] register state of 'extfpuirq' plugin device by virtual method
+00000000000i[     ] register state of 'ioapic' plugin device by virtual method
+00000000000i[     ] register state of 'keyboard' plugin device by virtual method
+00000000000i[     ] register state of 'harddrv' plugin device by virtual method
+00000000000i[     ] register state of 'serial' plugin device by virtual method
+00000000000i[     ] register state of 'parallel' plugin device by virtual method
+00000000000i[SYS  ] bx_pc_system_c::Reset(HARDWARE) called
+00000000000i[CPU0 ] cpu hardware reset
+00000000000i[APIC0] allocate APIC id=0 (MMIO enabled) to 0xfee00000
+00000000000i[CPU0 ] CPUID[0x00000000]: 00000003 756e6547 6c65746e 49656e69
+00000000000i[CPU0 ] CPUID[0x00000001]: 00000f00 00000800 00000000 078bfbff
+00000000000i[CPU0 ] CPUID[0x00000002]: 00410601 00000000 00000000 00000000
+00000000000i[CPU0 ] CPUID[0x00000003]: 00000000 00000000 00000000 00000000
+00000000000i[CPU0 ] CPUID[0x00000004]: 00000000 00000000 00000000 00000000
+00000000000i[CPU0 ] CPUID[0x80000000]: 80000004 00000000 00000000 00000000
+00000000000i[CPU0 ] CPUID[0x80000001]: 00000000 00000000 00000000 00000000
+00000000000i[CPU0 ] CPUID[0x80000002]: 20202020 20202020 20202020 6e492020
+00000000000i[CPU0 ] CPUID[0x80000003]: 286c6574 50202952 69746e65 52286d75
+00000000000i[CPU0 ] CPUID[0x80000004]: 20342029 20555043 20202020 00202020
+00000000000i[     ] reset of 'unmapped' plugin device by virtual method
+00000000000i[     ] reset of 'biosdev' plugin device by virtual method
+00000000000i[     ] reset of 'speaker' plugin device by virtual method
+00000000000i[     ] reset of 'extfpuirq' plugin device by virtual method
+00000000000i[     ] reset of 'ioapic' plugin device by virtual method
+00000000000i[     ] reset of 'keyboard' plugin device by virtual method
+00000000000i[     ] reset of 'harddrv' plugin device by virtual method
+00000000000i[     ] reset of 'serial' plugin device by virtual method
+00000000000i[     ] reset of 'parallel' plugin device by virtual method
+00000000000i[XGUI ] [x] Mouse off
+00000000000i[GDBST] addr fff0 len 1
+00000000000i[GDBST] addr fff0 len 8
+00000000000i[GDBST] addr fff0 len 7
+00000000000i[GDBST] addr c0109beb len 1
+00000000000i[GDBST] addr c0109beb len 1
+00000000000i[GDBST] addr c0109beb len 1
+00000000000i[GDBST] addr c0109beb len 1
+00000000000i[GDBST] addr c0109beb len e
+00000000000i[GDBST] addr c0109beb len 1
+00000000000i[GDBST] addr c0109beb len 1
+00000000000i[GDBST] addr c0109beb len 1
+00000000000i[GDBST] addr c0109beb len 1
+00000000000i[GDBST] addr c0109beb len 1
+00000000000i[GDBST] addr c0109beb len 1
+00000000000i[GDBST] addr c0109beb len e
+00000000000i[GDBST] addr c0109beb len 1
+00000000000i[GDBST] addr c0109beb len 1
+00000000000i[GDBST] setting breakpoint at c0100000
+00000000000i[GDBST] setting breakpoint at c0109beb
+00000003305i[BIOS ] $Revision: 1.247 $ $Date: 2010/04/04 19:33:50 $
+00000316803i[KBD  ] reset-disable command received
+00000442041i[VBIOS] VGABios $Id: vgabios.c,v 1.69 2009/04/07 18:18:20 vruppert Exp $
+00000442112i[VGA  ] VBE known Display Interface b0c0
+00000442144i[VGA  ] VBE known Display Interface b0c5
+00000445069i[VBIOS] VBE Bios $Id: vbe.c,v 1.62 2009/01/25 15:46:25 vruppert Exp $
+00000550000i[XGUI ] charmap update. Font Height is 16
+00000757758i[BIOS ] Starting rombios32
+00000758255i[BIOS ] Shutdown flag 0
+00000758923i[BIOS ] ram_size=0x00400000
+00000759374i[BIOS ] ram_end=4MB
+00000770390i[BIOS ] Found 1 cpu(s)
+00000789659i[BIOS ] bios_table_addr: 0x000fbc18 end=0x000fcc00
+00000802336i[BIOS ] bios_table_cur_addr: 0x000fbc18
+00000814553i[BIOS ] ata0-0: PCHS=1/16/63 translation=none LCHS=1/16/63
+00000872573i[BIOS ] ata0-1: PCHS=4/16/63 translation=none LCHS=4/16/63
+00003983798i[BIOS ] Booting from 0000:7c00
+00004091058i[GDBST] found breakpoint at c0100000
+00004091058i[GDBST] stopped with ac1
+00004091058i[GDBST] reg 8 set to c0100000
+00004091058i[GDBST] reg 41 set to ffffffff
+00004091058i[GDBST] Removing breakpoint at c0100000
+00004091058i[GDBST] Removing breakpoint at c0109beb
+00004091058i[GDBST] stepping
+00004091059i[GDBST] stopped with ac2
+00004091059i[GDBST] setting breakpoint at c0100000
+00004091059i[GDBST] setting breakpoint at c0109beb
+00005403796i[GDBST] found breakpoint at c0109beb
+00005403796i[GDBST] stopped with ac1
+00005403796i[GDBST] reg 8 set to c0109beb
+00005403796i[GDBST] reg 41 set to ffffffff
+00005403796i[GDBST] Removing breakpoint at c0100000
+00005403796i[GDBST] Removing breakpoint at c0109beb
+00005403796i[GDBST] addr c0109beb len 1
+00005403796i[GDBST] addr c011bfc0 len 40
+00005403796i[GDBST] stepping
+00005403797i[GDBST] stopped with ac2
+00005403797i[GDBST] setting breakpoint at c0100000
+00005403797i[GDBST] setting breakpoint at c0109beb
+00005403797i[GDBST] stepping
+00005403798i[GDBST] stopped with ac2
+00005403798i[GDBST] stepping
+00005403799i[GDBST] stopped with ac2
+00005403799i[GDBST] stepping
+00005403800i[GDBST] stopped with ac2
+00005403800i[GDBST] stepping
+00005403801i[GDBST] stopped with ac2
+00005403801i[GDBST] stepping
+00005403802i[GDBST] stopped with ac2
+00005403802i[GDBST] addr c0109bf7 len 1
+00005403802i[GDBST] Removing breakpoint at c0100000
+00005403802i[GDBST] Removing breakpoint at c0109beb
+00005403802i[GDBST] setting breakpoint at c0100000
+00005403802i[GDBST] setting breakpoint at c0109beb
+00005403802i[GDBST] stepping
+00005403803i[GDBST] stopped with ac2
+00005403803i[GDBST] stepping
+00005403804i[GDBST] stopped with ac2
+00005403804i[GDBST] addr c0109c00 len 1
+00005403804i[GDBST] Removing breakpoint at c0100000
+00005403804i[GDBST] Removing breakpoint at c0109beb
+00005403804i[GDBST] setting breakpoint at c0100000
+00005403804i[GDBST] setting breakpoint at c0109beb
+00005403804i[GDBST] stepping
+00005403805i[GDBST] stopped with ac2
+00005403805i[GDBST] stepping
+00005403806i[GDBST] stopped with ac2
+00005403806i[GDBST] stepping
+00005403807i[GDBST] stopped with ac2
+00005403807i[GDBST] stepping
+00005403808i[GDBST] stopped with ac2
+00005403808i[GDBST] stepping
+00005403828i[GDBST] stopped with ac2
+00005403828i[GDBST] addr c0109c11 len 1
+00005403828i[GDBST] Removing breakpoint at c0100000
+00005403828i[GDBST] Removing breakpoint at c0109beb
+00005403828i[GDBST] setting breakpoint at c0100000
+00005403828i[GDBST] setting breakpoint at c0109beb
+00005403828i[GDBST] stepping
+00005403829i[GDBST] stopped with ac2
+00005403829i[GDBST] stepping
+00005403830i[GDBST] stopped with ac2
+00005403830i[GDBST] stepping
+00005403831i[GDBST] stopped with ac2
+00005403831i[GDBST] stepping
+00005403832i[GDBST] stopped with ac2
+00005403832i[GDBST] stepping
+00005403833i[GDBST] stopped with ac2
+00005403833i[GDBST] addr c0109c2f len 1
+00005403833i[GDBST] Removing breakpoint at c0100000
+00005403833i[GDBST] Removing breakpoint at c0109beb
+00005403833i[GDBST] setting breakpoint at c0100000
+00005403833i[GDBST] setting breakpoint at c0109beb
+00005403833i[GDBST] stepping
+00005403834i[GDBST] stopped with ac2
+00005403834i[GDBST] addr c0109c35 len 1
+00005403834i[GDBST] Removing breakpoint at c0100000
+00005403834i[GDBST] Removing breakpoint at c0109beb
+00005403834i[GDBST] setting breakpoint at c0100000
+00005403834i[GDBST] setting breakpoint at c0109beb
+00005403834i[GDBST] stepping
+00005403835i[GDBST] stopped with ac2
+00005403835i[GDBST] addr c0109c3c len 1
+00005403835i[GDBST] Removing breakpoint at c0100000
+00005403835i[GDBST] Removing breakpoint at c0109beb
+00005403835i[GDBST] setting breakpoint at c0100000
+00005403835i[GDBST] setting breakpoint at c0109beb
+00005403835i[GDBST] stepping
+00005403836i[GDBST] stopped with ac2
+00005403836i[GDBST] addr c01008d0 len 1
+00005403836i[GDBST] addr c011be80 len 40
+00005403836i[GDBST] setting breakpoint at c0109c41
+00005403869i[GDBST] found breakpoint at c0109c41
+00005403869i[GDBST] stopped with ac1
+00005403869i[GDBST] reg 8 set to c0109c41
+00005403869i[GDBST] reg 41 set to ffffffff
+00005403869i[GDBST] Removing breakpoint at c0109c41
+00005403869i[GDBST] stepping
+00005403870i[GDBST] stopped with ac2
+00005403870i[GDBST] stepping
+00005403871i[GDBST] stopped with ac2
+00005403871i[GDBST] addr c010a3e5 len 1
+00005403871i[GDBST] addr c011be80 len 40
+00005403871i[GDBST] setting breakpoint at c0109c48
+00005406162i[GDBST] found breakpoint at c0109c48
+00005406162i[GDBST] stopped with ac1
+00005406162i[GDBST] reg 8 set to c0109c48
+00005406162i[GDBST] reg 41 set to ffffffff
+00005406162i[GDBST] Removing breakpoint at c0109c48
+00005406162i[GDBST] stepping
+00005406163i[GDBST] stopped with ac2
+00005406163i[GDBST] stepping
+00005406164i[GDBST] stopped with ac2
+00005406164i[GDBST] stepping
+00005406165i[GDBST] stopped with ac2
+00005406165i[GDBST] stepping
+00005406166i[GDBST] stopped with ac2
+00005406166i[GDBST] addr c0109aaa len 1
+00005406166i[GDBST] addr c011be80 len 40
+00005406166i[GDBST] setting breakpoint at c0109c58
+00005406268i[GDBST] found breakpoint at c0109c58
+00005406268i[GDBST] stopped with ac1
+00005406268i[GDBST] reg 8 set to c0109c58
+00005406268i[GDBST] reg 41 set to ffffffff
+00005406268i[GDBST] Removing breakpoint at c0109c58
+00005406268i[GDBST] stepping
+00005406269i[GDBST] stopped with ac2
+00005406269i[GDBST] stepping
+00005406270i[GDBST] stopped with ac2
+00005406270i[GDBST] stepping
+00005406271i[GDBST] stopped with ac2
+00005406271i[GDBST] stepping
+00005406272i[GDBST] stopped with ac2
+00005406272i[GDBST] stepping
+00005406273i[GDBST] stopped with ac2
+00005406273i[GDBST] stepping
+00005406274i[GDBST] stopped with ac2
+00005406274i[GDBST] addr c0106c23 len 1
+00005406274i[GDBST] addr c011be80 len 40
+00005406274i[GDBST] setting breakpoint at c0109c75
+00005406447i[GDBST] found breakpoint at c0109c75
+00005406447i[GDBST] stopped with ac1
+00005406447i[GDBST] reg 8 set to c0109c75
+00005406447i[GDBST] reg 41 set to ffffffff
+00005406447i[GDBST] Removing breakpoint at c0109c75
+00005406447i[GDBST] stepping
+00005406448i[GDBST] stopped with ac2
+00005406448i[GDBST] stepping
+00005406449i[GDBST] stopped with ac2
+00005406449i[GDBST] addr c010b0b8 len 1
+00005406449i[GDBST] addr c011be80 len 40
+00005406449i[GDBST] setting breakpoint at c0109c7d
+00005423298i[GDBST] found breakpoint at c0109c7d
+00005423298i[GDBST] stopped with ac1
+00005423298i[GDBST] reg 8 set to c0109c7d
+00005423298i[GDBST] reg 41 set to ffffffff
+00005423298i[GDBST] Removing breakpoint at c0109c7d
+00005423298i[GDBST] stepping
+00005423299i[GDBST] stopped with ac2
+00005423299i[GDBST] stepping
+00005423300i[GDBST] stopped with ac2
+00005423300i[GDBST] stepping
+00005423301i[GDBST] stopped with ac2
+00005423301i[GDBST] stepping
+00005423302i[GDBST] stopped with ac2
+00005423302i[GDBST] stepping
+00005423303i[GDBST] stopped with ac2
+00005423303i[GDBST] stepping
+00005423304i[GDBST] stopped with ac2
+00005423304i[GDBST] stepping
+00005423305i[GDBST] stopped with ac2
+00005423305i[GDBST] stepping
+00005423306i[GDBST] stopped with ac2
+00005423306i[GDBST] addr c010b772 len 1
+00005423306i[GDBST] addr c011be80 len 40
+00005423306i[GDBST] setting breakpoint at c0109cb8
+00005428456i[GDBST] found breakpoint at c0109cb8
+00005428456i[GDBST] stopped with ac1
+00005428456i[GDBST] reg 8 set to c0109cb8
+00005428456i[GDBST] reg 41 set to ffffffff
+00005428456i[GDBST] Removing breakpoint at c0109cb8
+00005428456i[GDBST] stepping
+00005428457i[GDBST] stopped with ac2
+00005428457i[GDBST] stepping
+00005428458i[GDBST] stopped with ac2
+00005428458i[GDBST] stepping
+00005428459i[GDBST] stopped with ac2
+00005428459i[GDBST] stepping
+00005428460i[GDBST] stopped with ac2
+00005428460i[GDBST] stepping
+00005428461i[GDBST] stopped with ac2
+00005428461i[GDBST] stepping
+00005428468i[GDBST] stopped with ac2
+00005428468i[GDBST] stepping
+00005428469i[GDBST] stopped with ac2
+00005428469i[GDBST] stepping
+00005428470i[GDBST] stopped with ac2
+00005428470i[GDBST] stepping
+00005428471i[GDBST] stopped with ac2
+00005428471i[GDBST] stepping
+00005428472i[GDBST] stopped with ac2
+00005428472i[GDBST] stepping
+00005428473i[GDBST] stopped with ac2
+00005428473i[GDBST] stepping
+00005428474i[GDBST] stopped with ac2
+00005428474i[GDBST] stepping
+00005428475i[GDBST] stopped with ac2
+00005428475i[GDBST] stepping
+00005428476i[GDBST] stopped with ac2
+00005428476i[GDBST] stepping
+00005428477i[GDBST] stopped with ac2
+00005428477i[GDBST] stepping
+00005428478i[GDBST] stopped with ac2
+00005428478i[GDBST] stepping
+00005428479i[GDBST] stopped with ac2
+00005428479i[GDBST] stepping
+00005428480i[GDBST] stopped with ac2
+00005428480i[GDBST] stepping
+00005428481i[GDBST] stopped with ac2
+00005428481i[GDBST] stepping
+00005428482i[GDBST] stopped with ac2
+00005428482i[GDBST] stepping
+00005428483i[GDBST] stopped with ac2
+00005428483i[GDBST] stepping
+00005428484i[GDBST] stopped with ac2
+00005428484i[GDBST] stepping
+00005428485i[GDBST] stopped with ac2
+00005428485i[GDBST] stepping
+00005428486i[GDBST] stopped with ac2
+00005428486i[GDBST] stepping
+00005428487i[GDBST] stopped with ac2
+00005428487i[GDBST] stepping
+00005428488i[GDBST] stopped with ac2
+00005428488i[GDBST] stepping
+00005428489i[GDBST] stopped with ac2
+00005428489i[GDBST] stepping
+00005428490i[GDBST] stopped with ac2
+00005428490i[GDBST] stepping
+00005428491i[GDBST] stopped with ac2
+00005428491i[GDBST] stepping
+00005428492i[GDBST] stopped with ac2
+00005428492i[GDBST] stepping
+00005428493i[GDBST] stopped with ac2
+00005428493i[GDBST] addr c010b609 len 1
+00005428493i[GDBST] addr c011be80 len 40
+00005428493i[GDBST] setting breakpoint at c0109d6a
+00005428510i[GDBST] found breakpoint at c0109d6a
+00005428510i[GDBST] stopped with ac1
+00005428510i[GDBST] reg 8 set to c0109d6a
+00005428510i[GDBST] reg 41 set to ffffffff
+00005428510i[GDBST] Removing breakpoint at c0109d6a
+00005428510i[GDBST] stepping
+00005428511i[GDBST] stopped with ac2
+00005428511i[GDBST] stepping
+00005428512i[GDBST] stopped with ac2
+00005428512i[GDBST] stepping
+00005428513i[GDBST] stopped with ac2
+00005428513i[GDBST] stepping
+00005428514i[GDBST] stopped with ac2
+00005428514i[GDBST] stepping
+00005428515i[GDBST] stopped with ac2
+00005428515i[GDBST] stepping
+00005428516i[GDBST] stopped with ac2
+00005428516i[GDBST] stepping
+00005428517i[GDBST] stopped with ac2
+00005428517i[GDBST] addr c010b598 len 1
+00005428517i[GDBST] addr c011be80 len 40
+00005428517i[GDBST] setting breakpoint at c0109d8e
+00005428529i[GDBST] found breakpoint at c0109d8e
+00005428529i[GDBST] stopped with ac1
+00005428529i[GDBST] reg 8 set to c0109d8e
+00005428529i[GDBST] reg 41 set to ffffffff
+00005428529i[GDBST] Removing breakpoint at c0109d8e
+00005428529i[GDBST] stepping
+00005428530i[GDBST] stopped with ac2
+00005428530i[GDBST] stepping
+00005428531i[GDBST] stopped with ac2
+00005428531i[GDBST] stepping
+00005428532i[GDBST] stopped with ac2
+00005428532i[GDBST] stepping
+00005428533i[GDBST] stopped with ac2
+00005428533i[GDBST] stepping
+00005428534i[GDBST] stopped with ac2
+00005428534i[GDBST] stepping
+00005428535i[GDBST] stopped with ac2
+00005428535i[GDBST] addr c010b772 len 1
+00005428535i[GDBST] addr c011be80 len 40
+00005428535i[GDBST] setting breakpoint at c0109dae
+00005433806i[GDBST] found breakpoint at c0109dae
+00005433806i[GDBST] stopped with ac1
+00005433806i[GDBST] reg 8 set to c0109dae
+00005433806i[GDBST] reg 41 set to ffffffff
+00005433806i[GDBST] Removing breakpoint at c0109dae
+00005433806i[GDBST] stepping
+00005433807i[GDBST] stopped with ac2
+00005433807i[GDBST] stepping
+00005433808i[GDBST] stopped with ac2
+00005433808i[GDBST] stepping
+00005433809i[GDBST] stopped with ac2
+00005433809i[GDBST] stepping
+00005433810i[GDBST] stopped with ac2
+00005433810i[GDBST] stepping
+00005433811i[GDBST] stopped with ac2
+00005433811i[GDBST] stepping
+00005433812i[GDBST] stopped with ac2
+00005433812i[GDBST] stepping
+00005433813i[GDBST] stopped with ac2
+00005433813i[GDBST] stepping
+00005433814i[GDBST] stopped with ac2
+00005433814i[GDBST] stepping
+00005433815i[GDBST] stopped with ac2
+00005433815i[GDBST] stepping
+00005433816i[GDBST] stopped with ac2
+00005433816i[GDBST] stepping
+00005433817i[GDBST] stopped with ac2
+00005433817i[GDBST] stepping
+00005433818i[GDBST] stopped with ac2
+00005433818i[GDBST] stepping
+00005433819i[GDBST] stopped with ac2
+00005433819i[GDBST] stepping
+00005433820i[GDBST] stopped with ac2
+00005433820i[GDBST] stepping
+00005433821i[GDBST] stopped with ac2
+00005433821i[GDBST] stepping
+00005433822i[GDBST] stopped with ac2
+00005433822i[GDBST] stepping
+00005433823i[GDBST] stopped with ac2
+00005433823i[GDBST] stepping
+00005433824i[GDBST] stopped with ac2
+00005433824i[GDBST] stepping
+00005433825i[GDBST] stopped with ac2
+00005433825i[GDBST] addr c010b609 len 1
+00005433825i[GDBST] addr c011be80 len 40
+00005433825i[GDBST] setting breakpoint at c0109e1c
+00005433842i[GDBST] found breakpoint at c0109e1c
+00005433842i[GDBST] stopped with ac1
+00005433842i[GDBST] reg 8 set to c0109e1c
+00005433842i[GDBST] reg 41 set to ffffffff
+00005433842i[GDBST] Removing breakpoint at c0109e1c
+00005433842i[GDBST] stepping
+00005433843i[GDBST] stopped with ac2
+00005433843i[GDBST] stepping
+00005433844i[GDBST] stopped with ac2
+00005433844i[GDBST] stepping
+00005433845i[GDBST] stopped with ac2
+00005433845i[GDBST] stepping
+00005433846i[GDBST] stopped with ac2
+00005433846i[GDBST] stepping
+00005433847i[GDBST] stopped with ac2
+00005433847i[GDBST] stepping
+00005433848i[GDBST] stopped with ac2
+00005433848i[GDBST] stepping
+00005433849i[GDBST] stopped with ac2
+00005433849i[GDBST] stepping
+00005433850i[GDBST] stopped with ac2
+00005433850i[GDBST] stepping
+00005433851i[GDBST] stopped with ac2
+00005433851i[GDBST] stepping
+00005433852i[GDBST] stopped with ac2
+00005433852i[GDBST] stepping
+00005433853i[GDBST] stopped with ac2
+00005433853i[GDBST] stepping
+00005433854i[GDBST] stopped with ac2
+00005433854i[GDBST] stepping
+00005433855i[GDBST] stopped with ac2
+00005433855i[GDBST] stepping
+00005433856i[GDBST] stopped with ac2
+00005433856i[GDBST] stepping
+00005433857i[GDBST] stopped with ac2
+00005433857i[GDBST] stepping
+00005433858i[GDBST] stopped with ac2
+00005433858i[GDBST] addr c010a0ac len 1
+00005433858i[GDBST] stepping
+00005433859i[GDBST] stopped with ac2
+00005433859i[GDBST] stepping
+00005433860i[GDBST] stopped with ac2
+00005433860i[GDBST] stepping
+00005433861i[GDBST] stopped with ac2
+00005433861i[GDBST] stepping
+00005433862i[GDBST] stopped with ac2
+00005433862i[GDBST] stepping
+00005433863i[GDBST] stopped with ac2
+00005433863i[GDBST] stepping
+00005433864i[GDBST] stopped with ac2
+00005433864i[GDBST] stepping
+00005433865i[GDBST] stopped with ac2
+00005433865i[GDBST] stepping
+00005433866i[GDBST] stopped with ac2
+00005433866i[GDBST] stepping
+00005433867i[GDBST] stopped with ac2
+00005433867i[GDBST] stepping
+00005433868i[GDBST] stopped with ac2
+00005433868i[GDBST] stepping
+00005433869i[GDBST] stopped with ac2
+00005433869i[GDBST] stepping
+00005433870i[GDBST] stopped with ac2
+00005433870i[GDBST] stepping
+00005433871i[GDBST] stopped with ac2
+00005433871i[GDBST] stepping
+00005433872i[GDBST] stopped with ac2
+00005433872i[GDBST] stepping
+00005433873i[GDBST] stopped with ac2
+00005433873i[GDBST] stepping
+00005433874i[GDBST] stopped with ac2
+00005433874i[GDBST] stepping
+00005433875i[GDBST] stopped with ac2
+00005433875i[GDBST] stepping
+00005433876i[GDBST] stopped with ac2
+00005433876i[GDBST] stepping
+00005433877i[GDBST] stopped with ac2
+00005433877i[GDBST] stepping
+00005433878i[GDBST] stopped with ac2
+00005433878i[GDBST] stepping
+00005433879i[GDBST] stopped with ac2
+00005433879i[GDBST] stepping
+00005433880i[GDBST] stopped with ac2
+00005433880i[GDBST] stepping
+00005433881i[GDBST] stopped with ac2
+00005433881i[GDBST] stepping
+00005433882i[GDBST] stopped with ac2
+00005433882i[GDBST] addr c010b598 len 1
+00005433882i[GDBST] addr c011be80 len 40
+00005433882i[GDBST] setting breakpoint at c0109ef2
+00005433894i[GDBST] found breakpoint at c0109ef2
+00005433894i[GDBST] stopped with ac1
+00005433894i[GDBST] reg 8 set to c0109ef2
+00005433894i[GDBST] reg 41 set to ffffffff
+00005433894i[GDBST] Removing breakpoint at c0109ef2
+00005433894i[GDBST] stepping
+00005433895i[GDBST] stopped with ac2
+00005433895i[GDBST] stepping
+00005433896i[GDBST] stopped with ac2
+00005433896i[GDBST] stepping
+00005433897i[GDBST] stopped with ac2
+00005433897i[GDBST] stepping
+00005433898i[GDBST] stopped with ac2
+00005433898i[GDBST] stepping
+00005433899i[GDBST] stopped with ac2
+00005433899i[GDBST] stepping
+00005433900i[GDBST] stopped with ac2
+00005433900i[GDBST] addr c0103099 len 1
+00005433900i[GDBST] addr c011be80 len 40
+00005433900i[GDBST] setting breakpoint at c0109f1b
+00005434528i[GDBST] found breakpoint at c0109f1b
+00005434528i[GDBST] stopped with ac1
+00005434528i[GDBST] reg 8 set to c0109f1b
+00005434528i[GDBST] reg 41 set to ffffffff
+00005434528i[GDBST] Removing breakpoint at c0109f1b
+00005434528i[GDBST] stepping
+00005434529i[GDBST] stopped with ac2
+00005434529i[GDBST] stepping
+00005434530i[GDBST] stopped with ac2
+00005434530i[GDBST] stepping
+00005434531i[GDBST] stopped with ac2
+00005434531i[GDBST] stepping
+00005434532i[GDBST] stopped with ac2
+00005434532i[GDBST] stepping
+00005434533i[GDBST] stopped with ac2
+00005434533i[GDBST] stepping
+00005434534i[GDBST] stopped with ac2
+00005434534i[GDBST] stepping
+00005434535i[GDBST] stopped with ac2
+00005434535i[GDBST] stepping
+00005434536i[GDBST] stopped with ac2
+00005434536i[GDBST] stepping
+00005434537i[GDBST] stopped with ac2
+00005434537i[GDBST] stepping
+00005434538i[GDBST] stopped with ac2
+00005434538i[GDBST] stepping
+00005434539i[GDBST] stopped with ac2
+00005434539i[GDBST] addr c010b772 len 1
+00005434539i[GDBST] addr c011be80 len 40
+00005434539i[GDBST] setting breakpoint at c0109f4a
+00005439609i[GDBST] found breakpoint at c0109f4a
+00005439609i[GDBST] stopped with ac1
+00005439609i[GDBST] reg 8 set to c0109f4a
+00005439609i[GDBST] reg 41 set to ffffffff
+00005439609i[GDBST] Removing breakpoint at c0109f4a
+00005439609i[GDBST] stepping
+00005439610i[GDBST] stopped with ac2
+00005439610i[GDBST] stepping
+00005439611i[GDBST] stopped with ac2
+00005439611i[GDBST] stepping
+00005439612i[GDBST] stopped with ac2
+00005439612i[GDBST] stepping
+00005439613i[GDBST] stopped with ac2
+00005439613i[GDBST] stepping
+00005439614i[GDBST] stopped with ac2
+00005439614i[GDBST] stepping
+00005439615i[GDBST] stopped with ac2
+00005439615i[GDBST] stepping
+00005439616i[GDBST] stopped with ac2
+00005439616i[GDBST] stepping
+00005439617i[GDBST] stopped with ac2
+00005439617i[GDBST] stepping
+00005439618i[GDBST] stopped with ac2
+00005439618i[GDBST] stepping
+00005439619i[GDBST] stopped with ac2
+00005439619i[GDBST] stepping
+00005439620i[GDBST] stopped with ac2
+00005439620i[GDBST] addr c0106a95 len 1
+00005439620i[GDBST] addr c011be80 len 40
+00005439620i[GDBST] setting breakpoint at c0109f8b
+00005480875i[GDBST] found breakpoint at c0109f8b
+00005480875i[GDBST] stopped with ac1
+00005480875i[GDBST] reg 8 set to c0109f8b
+00005480875i[GDBST] reg 41 set to ffffffff
+00005480875i[GDBST] Removing breakpoint at c0109f8b
+00005480875i[GDBST] stepping
+00005480876i[GDBST] stopped with ac2
+00005480876i[GDBST] stepping
+00005480877i[GDBST] stopped with ac2
+00005480877i[GDBST] stepping
+00005480878i[GDBST] stopped with ac2
+00005480878i[GDBST] stepping
+00005480879i[GDBST] stopped with ac2
+00005480879i[GDBST] stepping
+00005480880i[GDBST] stopped with ac2
+00005480880i[GDBST] stepping
+00005480881i[GDBST] stopped with ac2
+00005480881i[GDBST] addr c0109b89 len 1
+00005480881i[GDBST] addr c011be80 len 40
+00005480881i[GDBST] setting breakpoint at c0109fa5
+00005499249i[GDBST] found breakpoint at c0109fa5
+00005499249i[GDBST] stopped with ac1
+00005499249i[GDBST] reg 8 set to c0109fa5
+00005499249i[GDBST] reg 41 set to ffffffff
+00005499249i[GDBST] Removing breakpoint at c0109fa5
+00005499249i[GDBST] stepping
+00005499250i[GDBST] stopped with ac2
+00005499250i[GDBST] stepping
+00005499251i[GDBST] stopped with ac2
+00005499251i[GDBST] stepping
+00005499252i[GDBST] stopped with ac2
+00005499252i[GDBST] stepping
+00005499253i[GDBST] stopped with ac2
+00005499253i[GDBST] stepping
+00005499254i[GDBST] stopped with ac2
+00005499254i[GDBST] stepping
+00005499255i[GDBST] stopped with ac2
+00005499255i[GDBST] stepping
+00005499256i[GDBST] stopped with ac2
+00005499256i[GDBST] stepping
+00005499257i[GDBST] stopped with ac2
+00005499257i[GDBST] stepping
+00005499258i[GDBST] stopped with ac2
+00005499258i[GDBST] stepping
+00005499259i[GDBST] stopped with ac2
+00005499259i[GDBST] stepping
+00005499260i[GDBST] stopped with ac2
+00005499260i[GDBST] stepping
+00005499261i[GDBST] stopped with ac2
+00005499261i[GDBST] stepping
+00005499262i[GDBST] stopped with ac2
+00005499262i[GDBST] stepping
+00005499263i[GDBST] stopped with ac2
+00005499263i[GDBST] stepping
+00005499264i[GDBST] stopped with ac2
+00005499264i[GDBST] stepping
+00005499265i[GDBST] stopped with ac2
+00005499265i[GDBST] stepping
+00005499266i[GDBST] stopped with ac2
+00005499266i[GDBST] addr c010b609 len 1
+00005499266i[GDBST] addr c011be80 len 40
+00005499266i[GDBST] setting breakpoint at c0109d6a
+00005499283i[GDBST] found breakpoint at c0109d6a
+00005499283i[GDBST] stopped with ac1
+00005499283i[GDBST] reg 8 set to c0109d6a
+00005499283i[GDBST] reg 41 set to ffffffff
+00005499283i[GDBST] Removing breakpoint at c0109d6a
+00005499283i[GDBST] stepping
+00005499284i[GDBST] stopped with ac2
+00005499284i[GDBST] stepping
+00005499285i[GDBST] stopped with ac2
+00005499285i[GDBST] stepping
+00005499286i[GDBST] stopped with ac2
+00005499286i[GDBST] stepping
+00005499287i[GDBST] stopped with ac2
+00005499287i[GDBST] stepping
+00005499288i[GDBST] stopped with ac2
+00005499288i[GDBST] stepping
+00005499289i[GDBST] stopped with ac2
+00005499289i[GDBST] stepping
+00005499290i[GDBST] stopped with ac2
+00005499290i[GDBST] addr c010b598 len 1
+00005499290i[GDBST] addr c011be80 len 40
+00005499290i[GDBST] setting breakpoint at c0109d8e
+00005499302i[GDBST] found breakpoint at c0109d8e
+00005499302i[GDBST] stopped with ac1
+00005499302i[GDBST] reg 8 set to c0109d8e
+00005499302i[GDBST] reg 41 set to ffffffff
+00005499302i[GDBST] Removing breakpoint at c0109d8e
+00005499302i[GDBST] stepping
+00005499303i[GDBST] stopped with ac2
+00005499303i[GDBST] stepping
+00005499304i[GDBST] stopped with ac2
+00005499304i[GDBST] stepping
+00005499305i[GDBST] stopped with ac2
+00005499305i[GDBST] stepping
+00005499306i[GDBST] stopped with ac2
+00005499306i[GDBST] stepping
+00005499307i[GDBST] stopped with ac2
+00005499307i[GDBST] stepping
+00005499308i[GDBST] stopped with ac2
+00005499308i[GDBST] addr c010b772 len 1
+00005499308i[GDBST] addr c011be80 len 40
+00005499308i[GDBST] setting breakpoint at c0109dae
+00005505180i[GDBST] found breakpoint at c0109dae
+00005505180i[GDBST] stopped with ac1
+00005505180i[GDBST] reg 8 set to c0109dae
+00005505180i[GDBST] reg 41 set to ffffffff
+00005505180i[GDBST] Removing breakpoint at c0109dae
+00005505180i[GDBST] stepping
+00005505181i[GDBST] stopped with ac2
+00005505181i[GDBST] stepping
+00005505182i[GDBST] stopped with ac2
+00005505182i[GDBST] stepping
+00005505183i[GDBST] stopped with ac2
+00005505183i[GDBST] stepping
+00005505184i[GDBST] stopped with ac2
+00005505184i[GDBST] stepping
+00005505185i[GDBST] stopped with ac2
+00005505185i[GDBST] stepping
+00005505186i[GDBST] stopped with ac2
+00005505186i[GDBST] stepping
+00005505187i[GDBST] stopped with ac2
+00005505187i[GDBST] stepping
+00005505188i[GDBST] stopped with ac2
+00005505188i[GDBST] stepping
+00005505189i[GDBST] stopped with ac2
+00005505189i[GDBST] stepping
+00005505190i[GDBST] stopped with ac2
+00005505190i[GDBST] stepping
+00005505191i[GDBST] stopped with ac2
+00005505191i[GDBST] stepping
+00005505192i[GDBST] stopped with ac2
+00005505192i[GDBST] stepping
+00005505193i[GDBST] stopped with ac2
+00005505193i[GDBST] stepping
+00005505194i[GDBST] stopped with ac2
+00005505194i[GDBST] stepping
+00005505195i[GDBST] stopped with ac2
+00005505195i[GDBST] stepping
+00005505196i[GDBST] stopped with ac2
+00005505196i[GDBST] stepping
+00005505197i[GDBST] stopped with ac2
+00005505197i[GDBST] stepping
+00005505198i[GDBST] stopped with ac2
+00005505198i[GDBST] stepping
+00005505199i[GDBST] stopped with ac2
+00005505199i[GDBST] addr c010b609 len 1
+00005505199i[GDBST] addr c011be80 len 40
+00005505199i[GDBST] setting breakpoint at c0109e1c
+00005505216i[GDBST] found breakpoint at c0109e1c
+00005505216i[GDBST] stopped with ac1
+00005505216i[GDBST] reg 8 set to c0109e1c
+00005505216i[GDBST] reg 41 set to ffffffff
+00005505216i[GDBST] Removing breakpoint at c0109e1c
+00005505216i[GDBST] stepping
+00005505217i[GDBST] stopped with ac2
+00005505217i[GDBST] stepping
+00005505218i[GDBST] stopped with ac2
+00005505218i[GDBST] stepping
+00005505219i[GDBST] stopped with ac2
+00005505219i[GDBST] stepping
+00005505220i[GDBST] stopped with ac2
+00005505220i[GDBST] stepping
+00005505221i[GDBST] stopped with ac2
+00005505221i[GDBST] stepping
+00005505222i[GDBST] stopped with ac2
+00005505222i[GDBST] stepping
+00005505223i[GDBST] stopped with ac2
+00005505223i[GDBST] stepping
+00005505224i[GDBST] stopped with ac2
+00005505224i[GDBST] stepping
+00005505225i[GDBST] stopped with ac2
+00005505225i[GDBST] stepping
+00005505226i[GDBST] stopped with ac2
+00005505226i[GDBST] stepping
+00005505227i[GDBST] stopped with ac2
+00005505227i[GDBST] stepping
+00005505228i[GDBST] stopped with ac2
+00005505228i[GDBST] stepping
+00005505229i[GDBST] stopped with ac2
+00005505229i[GDBST] stepping
+00005505230i[GDBST] stopped with ac2
+00005505230i[GDBST] stepping
+00005505231i[GDBST] stopped with ac2
+00005505231i[GDBST] stepping
+00005505232i[GDBST] stopped with ac2
+00005505232i[GDBST] addr c010a0ac len 1
+00005505232i[GDBST] stepping
+00005505233i[GDBST] stopped with ac2
+00005505233i[GDBST] stepping
+00005505234i[GDBST] stopped with ac2
+00005505234i[GDBST] stepping
+00005505235i[GDBST] stopped with ac2
+00005505235i[GDBST] stepping
+00005505236i[GDBST] stopped with ac2
+00005505236i[GDBST] stepping
+00005505237i[GDBST] stopped with ac2
+00005505237i[GDBST] stepping
+00005505238i[GDBST] stopped with ac2
+00005505238i[GDBST] stepping
+00005505239i[GDBST] stopped with ac2
+00005505239i[GDBST] stepping
+00005505240i[GDBST] stopped with ac2
+00005505240i[GDBST] stepping
+00005505241i[GDBST] stopped with ac2
+00005505241i[GDBST] stepping
+00005505242i[GDBST] stopped with ac2
+00005505242i[GDBST] stepping
+00005505243i[GDBST] stopped with ac2
+00005505243i[GDBST] stepping
+00005505244i[GDBST] stopped with ac2
+00005505244i[GDBST] stepping
+00005505245i[GDBST] stopped with ac2
+00005505245i[GDBST] stepping
+00005505246i[GDBST] stopped with ac2
+00005505246i[GDBST] stepping
+00005505247i[GDBST] stopped with ac2
+00005505247i[GDBST] stepping
+00005505248i[GDBST] stopped with ac2
+00005505248i[GDBST] stepping
+00005505249i[GDBST] stopped with ac2
+00005505249i[GDBST] stepping
+00005505250i[GDBST] stopped with ac2
+00005505250i[GDBST] stepping
+00005505251i[GDBST] stopped with ac2
+00005505251i[GDBST] stepping
+00005505252i[GDBST] stopped with ac2
+00005505252i[GDBST] stepping
+00005505253i[GDBST] stopped with ac2
+00005505253i[GDBST] stepping
+00005505254i[GDBST] stopped with ac2
+00005505254i[GDBST] stepping
+00005505255i[GDBST] stopped with ac2
+00005505255i[GDBST] stepping
+00005505256i[GDBST] stopped with ac2
+00005505256i[GDBST] addr c010b598 len 1
+00005505256i[GDBST] addr c011be80 len 40
+00005505256i[GDBST] setting breakpoint at c0109ef2
+00005505268i[GDBST] found breakpoint at c0109ef2
+00005505268i[GDBST] stopped with ac1
+00005505268i[GDBST] reg 8 set to c0109ef2
+00005505268i[GDBST] reg 41 set to ffffffff
+00005505268i[GDBST] Removing breakpoint at c0109ef2
+00005505268i[GDBST] stepping
+00005505269i[GDBST] stopped with ac2
+00005505269i[GDBST] stepping
+00005505270i[GDBST] stopped with ac2
+00005505270i[GDBST] stepping
+00005505271i[GDBST] stopped with ac2
+00005505271i[GDBST] stepping
+00005505272i[GDBST] stopped with ac2
+00005505272i[GDBST] stepping
+00005505273i[GDBST] stopped with ac2
+00005505273i[GDBST] stepping
+00005505274i[GDBST] stopped with ac2
+00005505274i[GDBST] addr c0103099 len 1
+00005505274i[GDBST] addr c011be80 len 40
+00005505274i[GDBST] setting breakpoint at c0109f1b
+00005505971i[GDBST] found breakpoint at c0109f1b
+00005505971i[GDBST] stopped with ac1
+00005505971i[GDBST] reg 8 set to c0109f1b
+00005505971i[GDBST] reg 41 set to ffffffff
+00005505971i[GDBST] Removing breakpoint at c0109f1b
+00005505971i[GDBST] stepping
+00005505972i[GDBST] stopped with ac2
+00005505972i[GDBST] stepping
+00005505973i[GDBST] stopped with ac2
+00005505973i[GDBST] stepping
+00005505974i[GDBST] stopped with ac2
+00005505974i[GDBST] stepping
+00005505975i[GDBST] stopped with ac2
+00005505975i[GDBST] stepping
+00005505976i[GDBST] stopped with ac2
+00005505976i[GDBST] stepping
+00005505977i[GDBST] stopped with ac2
+00005505977i[GDBST] stepping
+00005505978i[GDBST] stopped with ac2
+00005505978i[GDBST] stepping
+00005505979i[GDBST] stopped with ac2
+00005505979i[GDBST] stepping
+00005505980i[GDBST] stopped with ac2
+00005505980i[GDBST] stepping
+00005505981i[GDBST] stopped with ac2
+00005505981i[GDBST] stepping
+00005505982i[GDBST] stopped with ac2
+00005505982i[GDBST] stepping
+00005505983i[GDBST] stopped with ac2
+00005505983i[GDBST] addr c010b772 len 1
+00005505983i[GDBST] addr c011be80 len 40
+00005505983i[GDBST] setting breakpoint at c0109f4a
+00005519685i[GDBST] found breakpoint at c0109f4a
+00005519685i[GDBST] stopped with ac1
+00005519685i[GDBST] reg 8 set to c0109f4a
+00005519685i[GDBST] reg 41 set to ffffffff
+00005519685i[GDBST] Removing breakpoint at c0109f4a
+00005519685i[GDBST] stepping
+00005519686i[GDBST] stopped with ac2
+00005519686i[GDBST] stepping
+00005519687i[GDBST] stopped with ac2
+00005519687i[GDBST] stepping
+00005519688i[GDBST] stopped with ac2
+00005519688i[GDBST] stepping
+00005519689i[GDBST] stopped with ac2
+00005519689i[GDBST] stepping
+00005519690i[GDBST] stopped with ac2
+00005519690i[GDBST] stepping
+00005519691i[GDBST] stopped with ac2
+00005519691i[GDBST] stepping
+00005519692i[GDBST] stopped with ac2
+00005519692i[GDBST] stepping
+00005519693i[GDBST] stopped with ac2
+00005519693i[GDBST] stepping
+00005519694i[GDBST] stopped with ac2
+00005519694i[GDBST] stepping
+00005519695i[GDBST] stopped with ac2
+00005519695i[GDBST] stepping
+00005519696i[GDBST] stopped with ac2
+00005519696i[GDBST] addr c0106a95 len 1
+00005519696i[GDBST] addr c011be80 len 40
+00005519696i[GDBST] setting breakpoint at c0109f8b
+00005519713i[GDBST] found breakpoint at c0109f8b
+00005519713i[GDBST] stopped with ac1
+00005519713i[GDBST] reg 8 set to c0109f8b
+00005519713i[GDBST] reg 41 set to ffffffff
+00005519713i[GDBST] Removing breakpoint at c0109f8b
+00005519713i[GDBST] stepping
+00005519714i[GDBST] stopped with ac2
+00005519714i[GDBST] stepping
+00005519715i[GDBST] stopped with ac2
+00005519715i[GDBST] stepping
+00005519716i[GDBST] stopped with ac2
+00005519716i[GDBST] stepping
+00005519717i[GDBST] stopped with ac2
+00005519717i[GDBST] stepping
+00005519718i[GDBST] stopped with ac2
+00005519718i[GDBST] stepping
+00005519719i[GDBST] stopped with ac2
+00005519719i[GDBST] addr c0109b89 len 1
+00005519719i[GDBST] addr c011be80 len 40
+00005519719i[GDBST] setting breakpoint at c0109fa5
+00005538156i[GDBST] found breakpoint at c0109fa5
+00005538156i[GDBST] stopped with ac1
+00005538156i[GDBST] reg 8 set to c0109fa5
+00005538156i[GDBST] reg 41 set to ffffffff
+00005538156i[GDBST] Removing breakpoint at c0109fa5
+00005538156i[GDBST] stepping
+00005538157i[GDBST] stopped with ac2
+00005538157i[GDBST] stepping
+00005538158i[GDBST] stopped with ac2
+00005538158i[GDBST] stepping
+00005538159i[GDBST] stopped with ac2
+00005538159i[GDBST] stepping
+00005538160i[GDBST] stopped with ac2
+00005538160i[GDBST] stepping
+00005538161i[GDBST] stopped with ac2
+00005538161i[GDBST] stepping
+00005538162i[GDBST] stopped with ac2
+00005538162i[GDBST] stepping
+00005538163i[GDBST] stopped with ac2
+00005538163i[GDBST] stepping
+00005538164i[GDBST] stopped with ac2
+00005538164i[GDBST] stepping
+00005538165i[GDBST] stopped with ac2
+00005538165i[GDBST] stepping
+00005538166i[GDBST] stopped with ac2
+00005538166i[GDBST] addr c0103099 len 1
+00005538166i[GDBST] addr c011be80 len 40
+00005538166i[GDBST] setting breakpoint at c0109f1b
+00005538932i[GDBST] found breakpoint at c0109f1b
+00005538932i[GDBST] stopped with ac1
+00005538932i[GDBST] reg 8 set to c0109f1b
+00005538932i[GDBST] reg 41 set to ffffffff
+00005538932i[GDBST] Removing breakpoint at c0109f1b
+00005538932i[GDBST] stepping
+00005538933i[GDBST] stopped with ac2
+00005538933i[GDBST] stepping
+00005538934i[GDBST] stopped with ac2
+00005538934i[GDBST] stepping
+00005538935i[GDBST] stopped with ac2
+00005538935i[GDBST] stepping
+00005538936i[GDBST] stopped with ac2
+00005538936i[GDBST] stepping
+00005538937i[GDBST] stopped with ac2
+00005538937i[GDBST] stepping
+00005538938i[GDBST] stopped with ac2
+00005538938i[GDBST] stepping
+00005538939i[GDBST] stopped with ac2
+00005538939i[GDBST] stepping
+00005538940i[GDBST] stopped with ac2
+00005538940i[GDBST] stepping
+00005538941i[GDBST] stopped with ac2
+00005538941i[GDBST] stepping
+00005538942i[GDBST] stopped with ac2
+00005538942i[GDBST] stepping
+00005538943i[GDBST] stopped with ac2
+00005538943i[GDBST] stepping
+00005538944i[GDBST] stopped with ac2
+00005538944i[GDBST] addr c010b772 len 1
+00005538944i[GDBST] addr c011be80 len 40
+00005538944i[GDBST] setting breakpoint at c0109f4a
+00005553470i[GDBST] found breakpoint at c0109f4a
+00005553470i[GDBST] stopped with ac1
+00005553470i[GDBST] reg 8 set to c0109f4a
+00005553470i[GDBST] reg 41 set to ffffffff
+00005553470i[GDBST] Removing breakpoint at c0109f4a
+00005553470i[GDBST] stepping
+00005553471i[GDBST] stopped with ac2
+00005553471i[GDBST] stepping
+00005553472i[GDBST] stopped with ac2
+00005553472i[GDBST] stepping
+00005553473i[GDBST] stopped with ac2
+00005553473i[GDBST] stepping
+00005553474i[GDBST] stopped with ac2
+00005553474i[GDBST] stepping
+00005553475i[GDBST] stopped with ac2
+00005553475i[GDBST] stepping
+00005553476i[GDBST] stopped with ac2
+00005553476i[GDBST] stepping
+00005553477i[GDBST] stopped with ac2
+00005553477i[GDBST] stepping
+00005553478i[GDBST] stopped with ac2
+00005553478i[GDBST] stepping
+00005553479i[GDBST] stopped with ac2
+00005553479i[GDBST] stepping
+00005553480i[GDBST] stopped with ac2
+00005553480i[GDBST] stepping
+00005553481i[GDBST] stopped with ac2
+00005553481i[GDBST] addr c0106a95 len 1
+00005553481i[GDBST] addr c011be80 len 40
+00005553481i[GDBST] setting breakpoint at c0109f8b
+00005553498i[GDBST] found breakpoint at c0109f8b
+00005553498i[GDBST] stopped with ac1
+00005553498i[GDBST] reg 8 set to c0109f8b
+00005553498i[GDBST] reg 41 set to ffffffff
+00005553498i[GDBST] Removing breakpoint at c0109f8b
+00005553498i[GDBST] stepping
+00005553499i[GDBST] stopped with ac2
+00005553499i[GDBST] stepping
+00005553500i[GDBST] stopped with ac2
+00005553500i[GDBST] stepping
+00005553501i[GDBST] stopped with ac2
+00005553501i[GDBST] stepping
+00005553502i[GDBST] stopped with ac2
+00005553502i[GDBST] stepping
+00005553503i[GDBST] stopped with ac2
+00005553503i[GDBST] stepping
+00005553504i[GDBST] stopped with ac2
+00005553504i[GDBST] addr c0109b89 len 1
+00005553504i[GDBST] addr c011be80 len 40
+00005553504i[GDBST] setting breakpoint at c0109fa5
+00005553698i[GDBST] found breakpoint at c0109fa5
+00005553698i[GDBST] stopped with ac1
+00005553698i[GDBST] reg 8 set to c0109fa5
+00005553698i[GDBST] reg 41 set to ffffffff
+00005553698i[GDBST] Removing breakpoint at c0109fa5
+00005553698i[GDBST] stepping
+00005553699i[GDBST] stopped with ac2
+00005553699i[GDBST] stepping
+00005553700i[GDBST] stopped with ac2
+00005553700i[GDBST] stepping
+00005553701i[GDBST] stopped with ac2
+00005553701i[GDBST] stepping
+00005553702i[GDBST] stopped with ac2
+00005553702i[GDBST] stepping
+00005553703i[GDBST] stopped with ac2
+00005553703i[GDBST] stepping
+00005553704i[GDBST] stopped with ac2
+00005553704i[GDBST] stepping
+00005553705i[GDBST] stopped with ac2
+00005553705i[GDBST] stepping
+00005553706i[GDBST] stopped with ac2
+00005553706i[GDBST] stepping
+00005553707i[GDBST] stopped with ac2
+00005553707i[GDBST] stepping
+00005553708i[GDBST] stopped with ac2
+00005553708i[GDBST] addr c0103099 len 1
+00005553708i[GDBST] addr c011be80 len 40
+00005553708i[GDBST] setting breakpoint at c0109f1b
+00005554543i[GDBST] found breakpoint at c0109f1b
+00005554543i[GDBST] stopped with ac1
+00005554543i[GDBST] reg 8 set to c0109f1b
+00005554543i[GDBST] reg 41 set to ffffffff
+00005554543i[GDBST] Removing breakpoint at c0109f1b
+00005554543i[GDBST] stepping
+00005554544i[GDBST] stopped with ac2
+00005554544i[GDBST] stepping
+00005554545i[GDBST] stopped with ac2
+00005554545i[GDBST] stepping
+00005554546i[GDBST] stopped with ac2
+00005554546i[GDBST] stepping
+00005554547i[GDBST] stopped with ac2
+00005554547i[GDBST] stepping
+00005554548i[GDBST] stopped with ac2
+00005554548i[GDBST] stepping
+00005554549i[GDBST] stopped with ac2
+00005554549i[GDBST] stepping
+00005554550i[GDBST] stopped with ac2
+00005554550i[GDBST] stepping
+00005554551i[GDBST] stopped with ac2
+00005554551i[GDBST] stepping
+00005554552i[GDBST] stopped with ac2
+00005554552i[GDBST] stepping
+00005554553i[GDBST] stopped with ac2
+00005554553i[GDBST] stepping
+00005554554i[GDBST] stopped with ac2
+00005554554i[GDBST] addr c010b772 len 1
+00005554554i[GDBST] addr c011be80 len 40
+00005554554i[GDBST] setting breakpoint at c0109f4a
+00005561162i[GDBST] found breakpoint at c0109f4a
+00005561162i[GDBST] stopped with ac1
+00005561162i[GDBST] reg 8 set to c0109f4a
+00005561162i[GDBST] reg 41 set to ffffffff
+00005561162i[GDBST] Removing breakpoint at c0109f4a
+00005561162i[GDBST] stepping
+00005561163i[GDBST] stopped with ac2
+00005561163i[GDBST] stepping
+00005561164i[GDBST] stopped with ac2
+00005561164i[GDBST] stepping
+00005561165i[GDBST] stopped with ac2
+00005561165i[GDBST] stepping
+00005561166i[GDBST] stopped with ac2
+00005561166i[GDBST] stepping
+00005561167i[GDBST] stopped with ac2
+00005561167i[GDBST] stepping
+00005561168i[GDBST] stopped with ac2
+00005561168i[GDBST] stepping
+00005561169i[GDBST] stopped with ac2
+00005561169i[GDBST] stepping
+00005561170i[GDBST] stopped with ac2
+00005561170i[GDBST] stepping
+00005561171i[GDBST] stopped with ac2
+00005561171i[GDBST] stepping
+00005561172i[GDBST] stopped with ac2
+00005561172i[GDBST] stepping
+00005561173i[GDBST] stopped with ac2
+00005561173i[GDBST] addr c0106a95 len 1
+00005561173i[GDBST] addr c011be80 len 40
+00005561173i[GDBST] setting breakpoint at c0109f8b
+00005575939i[GDBST] found breakpoint at c0109f8b
+00005575939i[GDBST] stopped with ac1
+00005575939i[GDBST] reg 8 set to c0109f8b
+00005575939i[GDBST] reg 41 set to ffffffff
+00005575939i[GDBST] Removing breakpoint at c0109f8b
+00005575939i[GDBST] stepping
+00005575940i[GDBST] stopped with ac2
+00005575940i[GDBST] stepping
+00005575941i[GDBST] stopped with ac2
+00005575941i[GDBST] stepping
+00005575942i[GDBST] stopped with ac2
+00005575942i[GDBST] stepping
+00005575943i[GDBST] stopped with ac2
+00005575943i[GDBST] stepping
+00005575944i[GDBST] stopped with ac2
+00005575944i[GDBST] stepping
+00005575945i[GDBST] stopped with ac2
+00005575945i[GDBST] addr c0109b89 len 1
+00005575945i[GDBST] addr c011be80 len 40
+00005575945i[GDBST] setting breakpoint at c0109fa5
+00005576139i[GDBST] found breakpoint at c0109fa5
+00005576139i[GDBST] stopped with ac1
+00005576139i[GDBST] reg 8 set to c0109fa5
+00005576139i[GDBST] reg 41 set to ffffffff
+00005576139i[GDBST] Removing breakpoint at c0109fa5
+00005576139i[GDBST] stepping
+00005576140i[GDBST] stopped with ac2
+00005576140i[GDBST] stepping
+00005576141i[GDBST] stopped with ac2
+00005576141i[GDBST] stepping
+00005576142i[GDBST] stopped with ac2
+00005576142i[GDBST] stepping
+00005576143i[GDBST] stopped with ac2
+00005576143i[GDBST] stepping
+00005576144i[GDBST] stopped with ac2
+00005576144i[GDBST] stepping
+00005576145i[GDBST] stopped with ac2
+00005576145i[GDBST] stepping
+00005576146i[GDBST] stopped with ac2
+00005576146i[GDBST] stepping
+00005576147i[GDBST] stopped with ac2
+00005576147i[GDBST] stepping
+00005576148i[GDBST] stopped with ac2
+00005576148i[GDBST] stepping
+00005576149i[GDBST] stopped with ac2
+00005576149i[GDBST] stepping
+00005576150i[GDBST] stopped with ac2
+00005576150i[GDBST] stepping
+00005576151i[GDBST] stopped with ac2
+00005576151i[GDBST] stepping
+00005576152i[GDBST] stopped with ac2
+00005576152i[GDBST] stepping
+00005576153i[GDBST] stopped with ac2
+00005576153i[GDBST] stepping
+00005576154i[GDBST] stopped with ac2
+00005576154i[GDBST] stepping
+00005576155i[GDBST] stopped with ac2
+00005576155i[GDBST] stepping
+00005576156i[GDBST] stopped with ac2
+00005576156i[GDBST] addr c010b609 len 1
+00005576156i[GDBST] addr c011be80 len 40
+00005576156i[GDBST] setting breakpoint at c0109d6a
+00005576173i[GDBST] found breakpoint at c0109d6a
+00005576173i[GDBST] stopped with ac1
+00005576173i[GDBST] reg 8 set to c0109d6a
+00005576173i[GDBST] reg 41 set to ffffffff
+00005576173i[GDBST] Removing breakpoint at c0109d6a
+00005576173i[GDBST] stepping
+00005576174i[GDBST] stopped with ac2
+00005576174i[GDBST] stepping
+00005576175i[GDBST] stopped with ac2
+00005576175i[GDBST] stepping
+00005576176i[GDBST] stopped with ac2
+00005576176i[GDBST] stepping
+00005576177i[GDBST] stopped with ac2
+00005576177i[GDBST] stepping
+00005576178i[GDBST] stopped with ac2
+00005576178i[GDBST] stepping
+00005576179i[GDBST] stopped with ac2
+00005576179i[GDBST] stepping
+00005576180i[GDBST] stopped with ac2
+00005576180i[GDBST] addr c010b598 len 1
+00005576180i[GDBST] addr c011be80 len 40
+00005576180i[GDBST] setting breakpoint at c0109d8e
+00005576192i[GDBST] found breakpoint at c0109d8e
+00005576192i[GDBST] stopped with ac1
+00005576192i[GDBST] reg 8 set to c0109d8e
+00005576192i[GDBST] reg 41 set to ffffffff
+00005576192i[GDBST] Removing breakpoint at c0109d8e
+00005576192i[GDBST] stepping
+00005576193i[GDBST] stopped with ac2
+00005576193i[GDBST] stepping
+00005576194i[GDBST] stopped with ac2
+00005576194i[GDBST] stepping
+00005576195i[GDBST] stopped with ac2
+00005576195i[GDBST] stepping
+00005576196i[GDBST] stopped with ac2
+00005576196i[GDBST] stepping
+00005576197i[GDBST] stopped with ac2
+00005576197i[GDBST] stepping
+00005576198i[GDBST] stopped with ac2
+00005576198i[GDBST] addr c010b772 len 1
+00005576198i[GDBST] addr c011be80 len 40
+00005576198i[GDBST] setting breakpoint at c0109dae
+00005581246i[GDBST] found breakpoint at c0109dae
+00005581246i[GDBST] stopped with ac1
+00005581246i[GDBST] reg 8 set to c0109dae
+00005581246i[GDBST] reg 41 set to ffffffff
+00005581246i[GDBST] Removing breakpoint at c0109dae
+00005581246i[GDBST] stepping
+00005581247i[GDBST] stopped with ac2
+00005581247i[GDBST] stepping
+00005581248i[GDBST] stopped with ac2
+00005581248i[GDBST] stepping
+00005581249i[GDBST] stopped with ac2
+00005581249i[GDBST] stepping
+00005581250i[GDBST] stopped with ac2
+00005581250i[GDBST] stepping
+00005581251i[GDBST] stopped with ac2
+00005581251i[GDBST] stepping
+00005581252i[GDBST] stopped with ac2
+00005581252i[GDBST] stepping
+00005581253i[GDBST] stopped with ac2
+00005581253i[GDBST] stepping
+00005581254i[GDBST] stopped with ac2
+00005581254i[GDBST] stepping
+00005581255i[GDBST] stopped with ac2
+00005581255i[GDBST] stepping
+00005581256i[GDBST] stopped with ac2
+00005581256i[GDBST] stepping
+00005581257i[GDBST] stopped with ac2
+00005581257i[GDBST] stepping
+00005581258i[GDBST] stopped with ac2
+00005581258i[GDBST] stepping
+00005581259i[GDBST] stopped with ac2
+00005581259i[GDBST] stepping
+00005581260i[GDBST] stopped with ac2
+00005581260i[GDBST] stepping
+00005581261i[GDBST] stopped with ac2
+00005581261i[GDBST] stepping
+00005581262i[GDBST] stopped with ac2
+00005581262i[GDBST] stepping
+00005581263i[GDBST] stopped with ac2
+00005581263i[GDBST] stepping
+00005581264i[GDBST] stopped with ac2
+00005581264i[GDBST] stepping
+00005581265i[GDBST] stopped with ac2
+00005581265i[GDBST] addr c010b609 len 1
+00005581265i[GDBST] addr c011be80 len 40
+00005581265i[GDBST] setting breakpoint at c0109e1c
+00005581282i[GDBST] found breakpoint at c0109e1c
+00005581282i[GDBST] stopped with ac1
+00005581282i[GDBST] reg 8 set to c0109e1c
+00005581282i[GDBST] reg 41 set to ffffffff
+00005581282i[GDBST] Removing breakpoint at c0109e1c
+00005581282i[GDBST] stepping
+00005581283i[GDBST] stopped with ac2
+00005581283i[GDBST] stepping
+00005581284i[GDBST] stopped with ac2
+00005581284i[GDBST] stepping
+00005581285i[GDBST] stopped with ac2
+00005581285i[GDBST] stepping
+00005581286i[GDBST] stopped with ac2
+00005581286i[GDBST] stepping
+00005581287i[GDBST] stopped with ac2
+00005581287i[GDBST] stepping
+00005581288i[GDBST] stopped with ac2
+00005581288i[GDBST] stepping
+00005581289i[GDBST] stopped with ac2
+00005581289i[GDBST] stepping
+00005581290i[GDBST] stopped with ac2
+00005581290i[GDBST] stepping
+00005581291i[GDBST] stopped with ac2
+00005581291i[GDBST] stepping
+00005581292i[GDBST] stopped with ac2
+00005581292i[GDBST] stepping
+00005581293i[GDBST] stopped with ac2
+00005581293i[GDBST] stepping
+00005581294i[GDBST] stopped with ac2
+00005581294i[GDBST] stepping
+00005581295i[GDBST] stopped with ac2
+00005581295i[GDBST] stepping
+00005581296i[GDBST] stopped with ac2
+00005581296i[GDBST] stepping
+00005581297i[GDBST] stopped with ac2
+00005581297i[GDBST] stepping
+00005581298i[GDBST] stopped with ac2
+00005581298i[GDBST] addr c010a0ac len 1
+00005581298i[GDBST] stepping
+00005581299i[GDBST] stopped with ac2
+00005581299i[GDBST] stepping
+00005581300i[GDBST] stopped with ac2
+00005581300i[GDBST] stepping
+00005581301i[GDBST] stopped with ac2
+00005581301i[GDBST] stepping
+00005581302i[GDBST] stopped with ac2
+00005581302i[GDBST] stepping
+00005581303i[GDBST] stopped with ac2
+00005581303i[GDBST] stepping
+00005581304i[GDBST] stopped with ac2
+00005581304i[GDBST] stepping
+00005581305i[GDBST] stopped with ac2
+00005581305i[GDBST] stepping
+00005581306i[GDBST] stopped with ac2
+00005581306i[GDBST] stepping
+00005581307i[GDBST] stopped with ac2
+00005581307i[GDBST] stepping
+00005581308i[GDBST] stopped with ac2
+00005581308i[GDBST] stepping
+00005581309i[GDBST] stopped with ac2
+00005581309i[GDBST] stepping
+00005581310i[GDBST] stopped with ac2
+00005581310i[GDBST] stepping
+00005581311i[GDBST] stopped with ac2
+00005581311i[GDBST] stepping
+00005581312i[GDBST] stopped with ac2
+00005581312i[GDBST] stepping
+00005581313i[GDBST] stopped with ac2
+00005581313i[GDBST] stepping
+00005581314i[GDBST] stopped with ac2
+00005581314i[GDBST] stepping
+00005581315i[GDBST] stopped with ac2
+00005581315i[GDBST] stepping
+00005581316i[GDBST] stopped with ac2
+00005581316i[GDBST] stepping
+00005581317i[GDBST] stopped with ac2
+00005581317i[GDBST] stepping
+00005581318i[GDBST] stopped with ac2
+00005581318i[GDBST] stepping
+00005581319i[GDBST] stopped with ac2
+00005581319i[GDBST] stepping
+00005581320i[GDBST] stopped with ac2
+00005581320i[GDBST] stepping
+00005581321i[GDBST] stopped with ac2
+00005581321i[GDBST] addr c010b598 len 1
+00005581321i[GDBST] addr c011be80 len 40
+00005581321i[GDBST] setting breakpoint at c0109ef2
+00005581333i[GDBST] found breakpoint at c0109ef2
+00005581333i[GDBST] stopped with ac1
+00005581333i[GDBST] reg 8 set to c0109ef2
+00005581333i[GDBST] reg 41 set to ffffffff
+00005581333i[GDBST] Removing breakpoint at c0109ef2
+00005581333i[GDBST] stepping
+00005581334i[GDBST] stopped with ac2
+00005581334i[GDBST] stepping
+00005581335i[GDBST] stopped with ac2
+00005581335i[GDBST] stepping
+00005581336i[GDBST] stopped with ac2
+00005581336i[GDBST] stepping
+00005581337i[GDBST] stopped with ac2
+00005581337i[GDBST] stepping
+00005581338i[GDBST] stopped with ac2
+00005581338i[GDBST] stepping
+00005581339i[GDBST] stopped with ac2
+00005581339i[GDBST] addr c0103099 len 1
+00005581339i[GDBST] addr c011be80 len 40
+00005581339i[GDBST] setting breakpoint at c0109f1b
+00005582243i[GDBST] found breakpoint at c0109f1b
+00005582243i[GDBST] stopped with ac1
+00005582243i[GDBST] reg 8 set to c0109f1b
+00005582243i[GDBST] reg 41 set to ffffffff
+00005582243i[GDBST] Removing breakpoint at c0109f1b
+00005582243i[GDBST] stepping
+00005582244i[GDBST] stopped with ac2
+00005582244i[GDBST] stepping
+00005582245i[GDBST] stopped with ac2
+00005582245i[GDBST] stepping
+00005582246i[GDBST] stopped with ac2
+00005582246i[GDBST] stepping
+00005582247i[GDBST] stopped with ac2
+00005582247i[GDBST] stepping
+00005582248i[GDBST] stopped with ac2
+00005582248i[GDBST] stepping
+00005582249i[GDBST] stopped with ac2
+00005582249i[GDBST] stepping
+00005582250i[GDBST] stopped with ac2
+00005582250i[GDBST] stepping
+00005582251i[GDBST] stopped with ac2
+00005582251i[GDBST] stepping
+00005582252i[GDBST] stopped with ac2
+00005582252i[GDBST] stepping
+00005582253i[GDBST] stopped with ac2
+00005582253i[GDBST] stepping
+00005582254i[GDBST] stopped with ac2
+00005582254i[GDBST] addr c010b772 len 1
+00005582254i[GDBST] addr c011be80 len 40
+00005582254i[GDBST] setting breakpoint at c0109f4a
+00005583136i[GDBST] found breakpoint at c0109f4a
+00005583136i[GDBST] stopped with ac1
+00005583136i[GDBST] reg 8 set to c0109f4a
+00005583136i[GDBST] reg 41 set to ffffffff
+00005583136i[GDBST] Removing breakpoint at c0109f4a
+00005583136i[GDBST] stepping
+00005583137i[GDBST] stopped with ac2
+00005583137i[GDBST] stepping
+00005583138i[GDBST] stopped with ac2
+00005583138i[GDBST] stepping
+00005583139i[GDBST] stopped with ac2
+00005583139i[GDBST] stepping
+00005583140i[GDBST] stopped with ac2
+00005583140i[GDBST] stepping
+00005583141i[GDBST] stopped with ac2
+00005583141i[GDBST] stepping
+00005583142i[GDBST] stopped with ac2
+00005583142i[GDBST] stepping
+00005583143i[GDBST] stopped with ac2
+00005583143i[GDBST] stepping
+00005583144i[GDBST] stopped with ac2
+00005583144i[GDBST] stepping
+00005583145i[GDBST] stopped with ac2
+00005583145i[GDBST] stepping
+00005583146i[GDBST] stopped with ac2
+00005583146i[GDBST] stepping
+00005583147i[GDBST] stopped with ac2
+00005583147i[GDBST] addr c0106a95 len 1
+00005583147i[GDBST] addr c011be80 len 40
+00005583147i[GDBST] setting breakpoint at c0109f8b
+00005599770i[GDBST] found breakpoint at c0109f8b
+00005599770i[GDBST] stopped with ac1
+00005599770i[GDBST] reg 8 set to c0109f8b
+00005599770i[GDBST] reg 41 set to ffffffff
+00005599770i[GDBST] Removing breakpoint at c0109f8b
+00005599770i[GDBST] stepping
+00005599771i[GDBST] stopped with ac2
+00005599771i[GDBST] stepping
+00005599772i[GDBST] stopped with ac2
+00005599772i[GDBST] stepping
+00005599773i[GDBST] stopped with ac2
+00005599773i[GDBST] stepping
+00005599774i[GDBST] stopped with ac2
+00005599774i[GDBST] stepping
+00005599775i[GDBST] stopped with ac2
+00005599775i[GDBST] stepping
+00005599776i[GDBST] stopped with ac2
+00005599776i[GDBST] addr c0109b89 len 1
+00005599776i[GDBST] addr c011be80 len 40
+00005599776i[GDBST] setting breakpoint at c0109fa5
+00005599970i[GDBST] found breakpoint at c0109fa5
+00005599970i[GDBST] stopped with ac1
+00005599970i[GDBST] reg 8 set to c0109fa5
+00005599970i[GDBST] reg 41 set to ffffffff
+00005599970i[GDBST] Removing breakpoint at c0109fa5
+00005599970i[GDBST] stepping
+00005599971i[GDBST] stopped with ac2
+00005599971i[GDBST] stepping
+00005599972i[GDBST] stopped with ac2
+00005599972i[GDBST] stepping
+00005599973i[GDBST] stopped with ac2
+00005599973i[GDBST] stepping
+00005599974i[GDBST] stopped with ac2
+00005599974i[GDBST] stepping
+00005599975i[GDBST] stopped with ac2
+00005599975i[GDBST] stepping
+00005599976i[GDBST] stopped with ac2
+00005599976i[GDBST] stepping
+00005599977i[GDBST] stopped with ac2
+00005599977i[GDBST] stepping
+00005599978i[GDBST] stopped with ac2
+00005599978i[GDBST] stepping
+00005599979i[GDBST] stopped with ac2
+00005599979i[GDBST] stepping
+00005599980i[GDBST] stopped with ac2
+00005599980i[GDBST] stepping
+00005599981i[GDBST] stopped with ac2
+00005599981i[GDBST] stepping
+00005599982i[GDBST] stopped with ac2
+00005599982i[GDBST] stepping
+00005599983i[GDBST] stopped with ac2
+00005599983i[GDBST] stepping
+00005599984i[GDBST] stopped with ac2
+00005599984i[GDBST] stepping
+00005599985i[GDBST] stopped with ac2
+00005599985i[GDBST] stepping
+00005599986i[GDBST] stopped with ac2
+00005599986i[GDBST] stepping
+00005599987i[GDBST] stopped with ac2
+00005599987i[GDBST] addr c010b609 len 1
+00005599987i[GDBST] addr c011be80 len 40
+00005599987i[GDBST] setting breakpoint at c0109d6a
+00005600004i[GDBST] found breakpoint at c0109d6a
+00005600004i[GDBST] stopped with ac1
+00005600004i[GDBST] reg 8 set to c0109d6a
+00005600004i[GDBST] reg 41 set to ffffffff
+00005600004i[GDBST] Removing breakpoint at c0109d6a
+00005600004i[GDBST] stepping
+00005600005i[GDBST] stopped with ac2
+00005600005i[GDBST] stepping
+00005600006i[GDBST] stopped with ac2
+00005600006i[GDBST] stepping
+00005600007i[GDBST] stopped with ac2
+00005600007i[GDBST] stepping
+00005600008i[GDBST] stopped with ac2
+00005600008i[GDBST] stepping
+00005600009i[GDBST] stopped with ac2
+00005600009i[GDBST] stepping
+00005600010i[GDBST] stopped with ac2
+00005600010i[GDBST] stepping
+00005600011i[GDBST] stopped with ac2
+00005600011i[GDBST] addr c010b598 len 1
+00005600011i[GDBST] addr c011be80 len 40
+00005600011i[GDBST] setting breakpoint at c0109d8e
+00005600023i[GDBST] found breakpoint at c0109d8e
+00005600023i[GDBST] stopped with ac1
+00005600023i[GDBST] reg 8 set to c0109d8e
+00005600023i[GDBST] reg 41 set to ffffffff
+00005600023i[GDBST] Removing breakpoint at c0109d8e
+00005600023i[GDBST] stepping
+00005600024i[GDBST] stopped with ac2
+00005600024i[GDBST] stepping
+00005600025i[GDBST] stopped with ac2
+00005600025i[GDBST] stepping
+00005600026i[GDBST] stopped with ac2
+00005600026i[GDBST] stepping
+00005600027i[GDBST] stopped with ac2
+00005600027i[GDBST] stepping
+00005600028i[GDBST] stopped with ac2
+00005600028i[GDBST] stepping
+00005600029i[GDBST] stopped with ac2
+00005600029i[GDBST] addr c010b772 len 1
+00005600029i[GDBST] addr c011be80 len 40
+00005600029i[GDBST] setting breakpoint at c0109dae
+00005605300i[GDBST] found breakpoint at c0109dae
+00005605300i[GDBST] stopped with ac1
+00005605300i[GDBST] reg 8 set to c0109dae
+00005605300i[GDBST] reg 41 set to ffffffff
+00005605300i[GDBST] Removing breakpoint at c0109dae
+00005605300i[GDBST] stepping
+00005605301i[GDBST] stopped with ac2
+00005605301i[GDBST] stepping
+00005605302i[GDBST] stopped with ac2
+00005605302i[GDBST] stepping
+00005605303i[GDBST] stopped with ac2
+00005605303i[GDBST] stepping
+00005605304i[GDBST] stopped with ac2
+00005605304i[GDBST] stepping
+00005605305i[GDBST] stopped with ac2
+00005605305i[GDBST] stepping
+00005605306i[GDBST] stopped with ac2
+00005605306i[GDBST] stepping
+00005605307i[GDBST] stopped with ac2
+00005605307i[GDBST] stepping
+00005605308i[GDBST] stopped with ac2
+00005605308i[GDBST] stepping
+00005605309i[GDBST] stopped with ac2
+00005605309i[GDBST] stepping
+00005605310i[GDBST] stopped with ac2
+00005605310i[GDBST] stepping
+00005605311i[GDBST] stopped with ac2
+00005605311i[GDBST] stepping
+00005605312i[GDBST] stopped with ac2
+00005605312i[GDBST] stepping
+00005605313i[GDBST] stopped with ac2
+00005605313i[GDBST] stepping
+00005605314i[GDBST] stopped with ac2
+00005605314i[GDBST] stepping
+00005605315i[GDBST] stopped with ac2
+00005605315i[GDBST] stepping
+00005605316i[GDBST] stopped with ac2
+00005605316i[GDBST] stepping
+00005605317i[GDBST] stopped with ac2
+00005605317i[GDBST] addr c010b609 len 1
+00005605317i[GDBST] addr c011be80 len 40
+00005605317i[GDBST] setting breakpoint at c0109d6a
+00005605334i[GDBST] found breakpoint at c0109d6a
+00005605334i[GDBST] stopped with ac1
+00005605334i[GDBST] reg 8 set to c0109d6a
+00005605334i[GDBST] reg 41 set to ffffffff
+00005605334i[GDBST] Removing breakpoint at c0109d6a
+00005605334i[GDBST] stepping
+00005605335i[GDBST] stopped with ac2
+00005605335i[GDBST] stepping
+00005605336i[GDBST] stopped with ac2
+00005605336i[GDBST] stepping
+00005605337i[GDBST] stopped with ac2
+00005605337i[GDBST] stepping
+00005605338i[GDBST] stopped with ac2
+00005605338i[GDBST] stepping
+00005605339i[GDBST] stopped with ac2
+00005605339i[GDBST] stepping
+00005605340i[GDBST] stopped with ac2
+00005605340i[GDBST] stepping
+00005605341i[GDBST] stopped with ac2
+00005605341i[GDBST] addr c010b598 len 1
+00005605341i[GDBST] addr c011be80 len 40
+00005605341i[GDBST] setting breakpoint at c0109d8e
+00005605353i[GDBST] found breakpoint at c0109d8e
+00005605353i[GDBST] stopped with ac1
+00005605353i[GDBST] reg 8 set to c0109d8e
+00005605353i[GDBST] reg 41 set to ffffffff
+00005605353i[GDBST] Removing breakpoint at c0109d8e
+00005605353i[GDBST] stepping
+00005605354i[GDBST] stopped with ac2
+00005605354i[GDBST] stepping
+00005605355i[GDBST] stopped with ac2
+00005605355i[GDBST] stepping
+00005605356i[GDBST] stopped with ac2
+00005605356i[GDBST] stepping
+00005605357i[GDBST] stopped with ac2
+00005605357i[GDBST] stepping
+00005605358i[GDBST] stopped with ac2
+00005605358i[GDBST] stepping
+00005605359i[GDBST] stopped with ac2
+00005605359i[GDBST] addr c010b772 len 1
+00005605359i[GDBST] addr c011be80 len 40
+00005605359i[GDBST] setting breakpoint at c0109dae
+00005610407i[GDBST] found breakpoint at c0109dae
+00005610407i[GDBST] stopped with ac1
+00005610407i[GDBST] reg 8 set to c0109dae
+00005610407i[GDBST] reg 41 set to ffffffff
+00005610407i[GDBST] Removing breakpoint at c0109dae
+00005610407i[GDBST] stepping
+00005610408i[GDBST] stopped with ac2
+00005610408i[GDBST] stepping
+00005610409i[GDBST] stopped with ac2
+00005610409i[GDBST] stepping
+00005610410i[GDBST] stopped with ac2
+00005610410i[GDBST] stepping
+00005610411i[GDBST] stopped with ac2
+00005610411i[GDBST] stepping
+00005610412i[GDBST] stopped with ac2
+00005610412i[GDBST] stepping
+00005610413i[GDBST] stopped with ac2
+00005610413i[GDBST] stepping
+00005610414i[GDBST] stopped with ac2
+00005610414i[GDBST] stepping
+00005610415i[GDBST] stopped with ac2
+00005610415i[GDBST] stepping
+00005610416i[GDBST] stopped with ac2
+00005610416i[GDBST] stepping
+00005610417i[GDBST] stopped with ac2
+00005610417i[GDBST] stepping
+00005610418i[GDBST] stopped with ac2
+00005610418i[GDBST] stepping
+00005610419i[GDBST] stopped with ac2
+00005610419i[GDBST] stepping
+00005610420i[GDBST] stopped with ac2
+00005610420i[GDBST] stepping
+00005610421i[GDBST] stopped with ac2
+00005610421i[GDBST] stepping
+00005610422i[GDBST] stopped with ac2
+00005610422i[GDBST] addr c0103099 len 1
+00005610422i[GDBST] addr c011be80 len 40
+00005610422i[GDBST] setting breakpoint at c010a00b
+00005628848i[GDBST] found breakpoint at c010a00b
+00005628848i[GDBST] stopped with ac1
+00005628848i[GDBST] reg 8 set to c010a00b
+00005628848i[GDBST] reg 41 set to ffffffff
+00005628848i[GDBST] Removing breakpoint at c010a00b
+00005628848i[GDBST] stepping
+00005628849i[GDBST] stopped with ac2
+00005628849i[GDBST] stepping
+00005628850i[GDBST] stopped with ac2
+00005628850i[GDBST] stepping
+00005628851i[GDBST] stopped with ac2
+00005628851i[GDBST] stepping
+00005628852i[GDBST] stopped with ac2
+00005628852i[GDBST] stepping
+00005628853i[GDBST] stopped with ac2
+00005628853i[GDBST] stepping
+00005628854i[GDBST] stopped with ac2
+00005628854i[GDBST] stepping
+00005628855i[GDBST] stopped with ac2
+00005628855i[GDBST] addr c0109b89 len 1
+00005628855i[GDBST] addr c011be80 len 40
+00005628855i[GDBST] setting breakpoint at c010a026
+00005647361i[GDBST] found breakpoint at c010a026
+00005647361i[GDBST] stopped with ac1
+00005647361i[GDBST] reg 8 set to c010a026
+00005647361i[GDBST] reg 41 set to ffffffff
+00005647361i[GDBST] Removing breakpoint at c010a026
+00005647361i[GDBST] stepping
+00005647362i[GDBST] stopped with ac2
+00005647362i[GDBST] stepping
+00005647363i[GDBST] stopped with ac2
+00005647363i[GDBST] stepping
+00005647364i[GDBST] stopped with ac2
+00005647364i[GDBST] stepping
+00005647365i[GDBST] stopped with ac2
+00005647365i[GDBST] stepping
+00005647366i[GDBST] stopped with ac2
+00005647366i[GDBST] stepping
+00005647367i[GDBST] stopped with ac2
+00005647367i[GDBST] stepping
+00005647368i[GDBST] stopped with ac2
+00005647368i[GDBST] addr c010b7a4 len 1
+00005647368i[GDBST] addr c011be80 len 40
+00005647368i[GDBST] setting breakpoint at c010a042
+00005652818i[GDBST] found breakpoint at c010a042
+00005652818i[GDBST] stopped with ac1
+00005652818i[GDBST] reg 8 set to c010a042
+00005652818i[GDBST] reg 41 set to ffffffff
+00005652818i[GDBST] addr c010a042 len 1
+00005652818i[GDBST] Removing breakpoint at c010a042
+00005652818i[GDBST] Removing breakpoint at c0100000
+00005652818i[GDBST] Removing breakpoint at c0109beb
+00005652818i[GDBST] setting breakpoint at c0100000
+00005652818i[GDBST] setting breakpoint at c0109beb
+00005652818i[GDBST] stepping
+00005652819i[GDBST] stopped with ac2
+00005652819i[GDBST] stepping
+00005652820i[GDBST] stopped with ac2
+00005652820i[GDBST] stepping
+00005652821i[GDBST] stopped with ac2
+00005652821i[GDBST] addr c0102fa9 len 1
+00005652821i[GDBST] addr c011be80 len 40
+00005652821i[GDBST] setting breakpoint at c010a050
+00005670283i[GDBST] found breakpoint at c010a050
+00005670283i[GDBST] stopped with ac1
+00005670283i[GDBST] reg 8 set to c010a050
+00005670283i[GDBST] reg 41 set to ffffffff
+00005670283i[GDBST] addr c010a050 len 1
+00005670283i[GDBST] Removing breakpoint at c010a050
+00005670283i[GDBST] Removing breakpoint at c0100000
+00005670283i[GDBST] Removing breakpoint at c0109beb
+00005670283p[GDBST] >>PANIC<< Debugger asked us to quit
+00005670283i[CPU0 ] CPU is in protected mode (active)
+00005670283i[CPU0 ] CS.d_b = 32 bit
+00005670283i[CPU0 ] SS.d_b = 32 bit
+00005670283i[CPU0 ] | EAX=c0112008  EBX=c011702c  ECX=00000007  EDX=00000000
+00005670283i[CPU0 ] | ESP=c011beb8  EBP=c011bfc0  ESI=c028f000  EDI=c028e000
+00005670283i[CPU0 ] | IOPL=0 id vip vif ac vm rf nt of df IF tf SF zf AF pf cf
+00005670283i[CPU0 ] | SEG selector     base    limit G D
+00005670283i[CPU0 ] | SEG sltr(index|ti|rpl)     base    limit G D
+00005670283i[CPU0 ] |  CS:0008( 0001| 0|  0) 00000000 ffffffff 1 1
+00005670283i[CPU0 ] |  DS:0010( 0002| 0|  0) 00000000 ffffffff 1 1
+00005670283i[CPU0 ] |  SS:0010( 0002| 0|  0) 00000000 ffffffff 1 1
+00005670283i[CPU0 ] |  ES:0010( 0002| 0|  0) 00000000 ffffffff 1 1
+00005670283i[CPU0 ] |  FS:0010( 0002| 0|  0) 00000000 ffffffff 1 1
+00005670283i[CPU0 ] |  GS:0010( 0002| 0|  0) 00000000 ffffffff 1 1
+00005670283i[CPU0 ] | EIP=c010a050 (c010a050)
+00005670283i[CPU0 ] | CR0=0xe0010015 CR2=0x00000000
+00005670283i[CPU0 ] | CR3=0x0011c000 CR4=0x00000000
+00005670283i[CPU0 ] 0xc010a050>> lea eax, dword ptr ss:[ebp-104] : 8D4598
+00005670283i[CMOS ] Last time is 5 (Thu Jan  1 09:00:05 1970)
+00005670283i[XGUI ] Exit
+00005670283i[     ] restoring default signal behavior
+00005670283i[CTRL ] quit_sim called with exit code 1

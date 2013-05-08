@@ -3,6 +3,9 @@
 
 #include "filesys/off_t.h"
 
+/* Project 4 */
+typedef int32_t fid_t;
+
 struct inode;
 
 /* Opening and closing files. */
@@ -25,5 +28,10 @@ void file_allow_write (struct file *);
 void file_seek (struct file *, off_t);
 off_t file_tell (struct file *);
 off_t file_length (struct file *);
+
+/* Project 4 */
+fid_t file_insert_in_fd (struct file *file);
+struct file *file_search_in_fd (int fd);
+void file_remove_in_fd (int fd);
 
 #endif /* filesys/file.h  */

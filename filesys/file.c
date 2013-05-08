@@ -1,7 +1,9 @@
 #include "filesys/file.h"
 #include <debug.h>
+#include <list.h>
 #include "filesys/inode.h"
 #include "threads/malloc.h"
+#include "threads/thread.h"
 
 /* An open file. */
 struct file 
@@ -9,6 +11,8 @@ struct file
     struct inode *inode;        /* File inode. */
     off_t pos;                  /* Current position. */
     bool deny_write;            /* Has file_deny_write() been called? */
+    struct list_elem elem;      /* Project 4 */
+    unsigned int fid;
   };
 
 /* Open a file for the given INODE, of which it takes ownership,
@@ -166,3 +170,75 @@ file_tell (struct file *file)
   ASSERT (file != NULL);
   return file->pos;
 }
+
+bool less_fid(struct list_elem *, struct list_elem *, void *);
+
+fid_t
+file_insert_in_fd (struct file *file)
+{
+  struct list_elem *e;
+  struct file *f;
+  struct thread *t = thread_current ();
+  
+  if(list_empty(&(t->open_file_list)))
+  {
+    file->fid = 3;
+  }
+  else
+  {
+    e = list_max(&(t->open_file_list), less_fid, NULL);
+    f = list_entry(e, struct file, elem);
+    file->fid = f->fid + 1;
+  }
+  list_push_back(&t->open_file_list, &file->elem);
+ 
+  return file->fid;
+}
+
+bool less_fid(struct list_elem *a_, struct list_elem *b_, void *aux UNUSED)
+{
+  const struct file *a = list_entry (a_, struct file, elem);
+  const struct file *b = list_entry (b_, struct file, elem);
+  
+  return a->fid < b->fid;
+}
+
+struct file *
+file_search_in_fd (int fd)
+{
+  struct list_elem *e;
+  struct file *f;
+  struct thread *t = thread_current();
+  int success = 0;
+  
+  for (e = list_begin(&t->open_file_list) ; e != list_end(&t->open_file_list) ; e = list_next(e))
+  {
+    f = list_entry(e, struct file, elem);
+    if (f->fid == fd)
+    {
+      success = 1;
+      break;
+    }
+  }
+  
+  return success ? f : NULL;
+}
+  
+void
+file_remove_in_fd(int fd)
+{
+  struct list_elem *e;
+  struct file *f;
+  struct thread *t = thread_current();
+  
+  for (e = list_begin(&t->open_file_list) ; e != list_end(&t->open_file_list) ; e = list_next(e))
+  {
+    f = list_entry(e, struct file, elem);
+    if (f->fid == fd)
+    {
+      list_remove(e);
+      break;
+    }
+  }
+}
+  

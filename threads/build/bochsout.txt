@@ -29,7 +29,7 @@
 00000000000i[     ]   SB16 support: no
 00000000000i[     ]   USB support: no
 00000000000i[     ]   VGA extension support: vbe 
-00000000000i[MEM0 ] allocated memory at 0xb6db4008. after alignment, vector=0xb6db5000
+00000000000i[MEM0 ] allocated memory at 0xb6d7d008. after alignment, vector=0xb6d7e000
 00000000000i[MEM0 ] 4.00MB
 00000000000i[MEM0 ] mem block size = 0x00100000, blocks=4
 00000000000i[MEM0 ] rom at 0xfffe0000/131072 ('/usr/local/share/bochs/BIOS-bochs-latest')
@@ -56,7 +56,7 @@
 00000000000i[     ] init_dev of 'keyboard' plugin device by virtual method
 00000000000i[KBD  ] will paste characters every 1000 keyboard ticks
 00000000000i[     ] init_dev of 'harddrv' plugin device by virtual method
-00000000000i[HD   ] HD on ata0-0: '/tmp/T2tJ4kQZ7C.dsk' 'flat' mode 
+00000000000i[HD   ] HD on ata0-0: '/tmp/GwbTvQNU9t.dsk' 'flat' mode 
 00000000000i[HD   ] Using boot sequence disk, none, none
 00000000000i[HD   ] Floppy boot signature check is enabled
 00000000000i[     ] init_dev of 'serial' plugin device by virtual method
@@ -95,10 +95,6 @@
 00000000000i[     ] reset of 'serial' plugin device by virtual method
 00000000000i[     ] reset of 'parallel' plugin device by virtual method
 00000000000i[XGUI ] [x] Mouse off
-00000000000i[GDBST] addr fff0 len 1
-00000000000i[GDBST] addr fff0 len 8
-00000000000i[GDBST] addr fff0 len 7
-00000000000i[GDBST] setting breakpoint at c0100000
 00000003305i[BIOS ] $Revision: 1.247 $ $Date: 2010/04/04 19:33:50 $
 00000316803i[KBD  ] reset-disable command received
 00000442041i[VBIOS] VGABios $Id: vgabios.c,v 1.69 2009/04/07 18:18:20 vruppert Exp $
@@ -116,49 +112,26 @@
 00000814503i[BIOS ] ata0-0: PCHS=1/16/63 translation=none LCHS=1/16/63
 00004695950i[BIOS ] IDE time out
 00007718729i[BIOS ] Booting from 0000:7c00
-00007835493i[GDBST] found breakpoint at c0100000
-00007835493i[GDBST] stopped with ac1
-00007835493i[GDBST] reg 8 set to c0100000
-00007835493i[GDBST] reg 41 set to ffffffff
-00007835493i[GDBST] Removing breakpoint at c0100000
-00007835493i[GDBST] stepping
-00007835494i[GDBST] stopped with ac2
-00007835494i[GDBST] setting breakpoint at c0100000
-00137309209i[GDBST] Got byte 3
-00137309209i[GDBST] stopped with ac3
-00137309209i[GDBST] Removing breakpoint at c0100000
-00137309209i[GDBST] addr c01099f3 len 1
-00137309209i[GDBST] addr c002ff80 len 40
-00137309209i[GDBST] addr c010f44c len 8
-00137309209i[GDBST] addr c010f454 len 8
-00137309209i[GDBST] addr c010f45c len 8
-00137309209i[GDBST] addr c010f790 len 8
-00137309209i[GDBST] addr c010f798 len 8
-00137309209i[GDBST] addr c010f4ec len 8
-00137309209i[GDBST] addr c010f4f4 len 8
-00137309209i[GDBST] addr c010f4fc len 8
-00137309209i[GDBST] addr c010f504 len 8
-00137309209i[GDBST] addr c010f50c len 8
-00137309209p[GDBST] >>PANIC<< Debugger asked us to quit
-00137309209i[CPU0 ] CPU is in protected mode (active)
-00137309209i[CPU0 ] CS.d_b = 32 bit
-00137309209i[CPU0 ] SS.d_b = 32 bit
-00137309209i[CPU0 ] | EAX=00000000  EBX=000000a9  ECX=00000000  EDX=0000003f
-00137309209i[CPU0 ] | ESP=c002ff60  EBP=c002ff88  ESI=000e0000  EDI=c0115000
-00137309209i[CPU0 ] | IOPL=0 id vip vif ac vm rf nt of df if tf sf ZF af PF cf
-00137309209i[CPU0 ] | SEG selector     base    limit G D
-00137309209i[CPU0 ] | SEG sltr(index|ti|rpl)     base    limit G D
-00137309209i[CPU0 ] |  CS:0008( 0001| 0|  0) 00000000 ffffffff 1 1
-00137309209i[CPU0 ] |  DS:0010( 0002| 0|  0) 00000000 ffffffff 1 1
-00137309209i[CPU0 ] |  SS:0010( 0002| 0|  0) 00000000 ffffffff 1 1
-00137309209i[CPU0 ] |  ES:0010( 0002| 0|  0) 00000000 ffffffff 1 1
-00137309209i[CPU0 ] |  FS:0010( 0002| 0|  0) 00000000 ffffffff 1 1
-00137309209i[CPU0 ] |  GS:0010( 0002| 0|  0) 00000000 ffffffff 1 1
-00137309209i[CPU0 ] | EIP=c01099f3 (c01099f3)
-00137309209i[CPU0 ] | CR0=0xe0010015 CR2=0x00000000
-00137309209i[CPU0 ] | CR3=0x00117000 CR4=0x00000000
-00137309209i[CPU0 ] 0xc01099f3>> jmp .-2 (0xc01099f3) : EBFE
-00137309209i[CMOS ] Last time is 137 (Thu Jan  1 09:02:17 1970)
-00137309209i[XGUI ] Exit
-00137309209i[     ] restoring default signal behavior
-00137309209i[CTRL ] quit_sim called with exit code 1
+00018087165p[UNMP ] >>PANIC<< Shutdown port: shutdown requested
+00018087165i[CPU0 ] CPU is in protected mode (active)
+00018087165i[CPU0 ] CS.d_b = 32 bit
+00018087165i[CPU0 ] SS.d_b = 32 bit
+00018087165i[CPU0 ] | EAX=0000006e  EBX=c010c434  ECX=c002ff8e  EDX=ffff8900
+00018087165i[CPU0 ] | ESP=c002ff70  EBP=c002ff98  ESI=c010d16b  EDI=c002ff90
+00018087165i[CPU0 ] | IOPL=0 id vip vif ac vm rf nt of df IF tf sf zf af pf cf
+00018087165i[CPU0 ] | SEG selector     base    limit G D
+00018087165i[CPU0 ] | SEG sltr(index|ti|rpl)     base    limit G D
+00018087165i[CPU0 ] |  CS:0008( 0001| 0|  0) 00000000 ffffffff 1 1
+00018087165i[CPU0 ] |  DS:0010( 0002| 0|  0) 00000000 ffffffff 1 1
+00018087165i[CPU0 ] |  SS:0010( 0002| 0|  0) 00000000 ffffffff 1 1
+00018087165i[CPU0 ] |  ES:0010( 0002| 0|  0) 00000000 ffffffff 1 1
+00018087165i[CPU0 ] |  FS:0010( 0002| 0|  0) 00000000 ffffffff 1 1
+00018087165i[CPU0 ] |  GS:0010( 0002| 0|  0) 00000000 ffffffff 1 1
+00018087165i[CPU0 ] | EIP=c0100061 (c0100060)
+00018087165i[CPU0 ] | CR0=0xe0010015 CR2=0x00000000
+00018087165i[CPU0 ] | CR3=0x00113000 CR4=0x00000000
+00018087165i[CPU0 ] 0xc0100060>> out dx, al : EE
+00018087165i[CMOS ] Last time is 18 (Thu Jan  1 09:00:18 1970)
+00018087165i[XGUI ] Exit
+00018087165i[     ] restoring default signal behavior
+00018087165i[CTRL ] quit_sim called with exit code 1

@@ -1,0 +1,33 @@
+Writing command line to /tmp/UbVww5z74V.dsk...
+warning: can't find squish-pty, so terminal input will fail
+bochs -q
+Kernel command line: run pt-recursive
+Pintos booting with 4,096 kB RAM...
+372 pages available in kernel pool.
+371 pages available in user pool.
+Page Directory List initializing...
+Calibrating timer...  102,400 loops/s.
+hd0:0: detected 1,008 sector (504 kB) disk, model "Generic 1234", serial "BXHD00011"
+hd0:1: detected 4,032 sector (1 MB) disk, model "Generic 1234", serial "BXHD00012"
+hd1:1: detected 32,256 sector (15 MB) disk, model "Generic 1234", serial "BXHD00022"
+Size of Swap Disk : 32256
+Boot complete.
+Executing 'pt-recursive':
+thread: main wait for process_wait(3)...
+(pt-recursive) begin
+Before : Now I'm 800.
+
+(pt-recursive) Now I'm Finished.
+
+After : Now I'm 800.
+
+(pt-recursive) end
+pt-recursive:exit(0)
+Execution of 'pt-recursive' complete.
+swapped in : 51
+swapped out : 88
+released : 37
+========================================================================
+                       Bochs x86 Emulator 2.4.5
+              Build from CVS snapshot, on April 25, 2010
+========================================================================

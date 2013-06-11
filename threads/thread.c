@@ -124,6 +124,11 @@ thread_init (void)
 #ifdef DEBUG
   init_test_output();
 #endif  
+
+#ifdef USERPROG
+  initial_thread->parent = NULL;
+  list_init(&initial_thread->children);
+#endif
   /* Assing current cpu clock to exec_start. */
   exec_start = rdtsc();
 }
@@ -194,7 +199,7 @@ tid_t
 thread_create (const char *name, int priority,
                thread_func *function, void *aux) 
 {
-  struct thread *t;
+  struct thread *t, *cur = thread_current();
   struct kernel_thread_frame *kf;
   struct switch_entry_frame *ef;
   struct switch_threads_frame *sf;
@@ -212,8 +217,8 @@ thread_create (const char *name, int priority,
   init_thread (t, name, priority);
   tid = t->tid = allocate_tid ();
   
-  /* Project 4 */
-  list_init(&t->open_file_list);
+  t->parent = cur;
+  list_push_back(&cur->children,&t->siblings);
 
   /* Prepare thread for first run by initializing its stack.
      Do this atomically so intermediate values for the stack 
@@ -340,7 +345,7 @@ thread_exit (void)
      when it call schedule_tail(). */
   intr_disable ();
   list_remove (&thread_current()->allelem);
-  thread_current ()->status = THREAD_DYING;
+  thread_current()->status = THREAD_DYING;
   schedule ();
   NOT_REACHED ();
 }
@@ -512,7 +517,7 @@ static void
 init_thread (struct thread *t, const char *name, int priority)
 {
   struct list_elem *e;
-  
+
   ASSERT (t != NULL);
   ASSERT (PRI_MIN <= priority && priority <= PRI_MAX);
   ASSERT (name != NULL);
@@ -524,6 +529,13 @@ init_thread (struct thread *t, const char *name, int priority)
   t->priority = priority;
   t->magic = THREAD_MAGIC;
   list_push_back (&all_list, &t->allelem);
+  
+  /* Project 4 */
+  list_init(&t->open_file_list);
+  list_init(&t->children);
+  
+  sema_init(&t->sync_for_parent, 0);
+	sema_init(&t->sync_for_child, 0);
   
   /* Clear vruntime of all threads in all_list for the fairness. */
   for (e = list_begin (&all_list); e != list_end (&all_list); e = list_next (e))
@@ -747,7 +759,9 @@ void insert_ready_list(struct thread *t)
   unsigned int delta = rdtsc() - exec_start;
   int error;
   struct list_elem *e;
+#ifdef DEBUG  
   struct thread *t_;
+#endif
   
   t->vruntime = t->vruntime + delta * p_to_w(t->priority);
 #ifdef DEBUG  

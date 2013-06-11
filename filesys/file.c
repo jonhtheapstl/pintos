@@ -241,4 +241,9 @@ file_remove_in_fd(int fd)
     }
   }
 }
-  
+
+void
+file_close_with_list_elem(struct list_elem *e)
+{
+  file_close(list_entry(e, struct file, elem));
+}  

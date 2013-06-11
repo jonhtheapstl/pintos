@@ -4,6 +4,14 @@
 #include "userprog/gdt.h"
 #include "threads/interrupt.h"
 #include "threads/thread.h"
+#include "threads/vaddr.h"
+
+#include "threads/palloc.h"
+#include "threads/pte.h"
+#include "userprog/pagedir.h"
+#include "vm/frame.h"
+#include "vm/swap.h"
+#include "vm/vm.h"
 
 /* Number of page faults that are processed. */
 static long long page_fault_cnt;
@@ -122,10 +130,14 @@ kill (struct intr_frame *f)
 static void
 page_fault (struct intr_frame *f) 
 {
-  bool not_present;  /* True: not-present page, false: writing r/o page. */
+  bool not_present;  /* True: not-present page, false: writing read only page. */
   bool write;        /* True: access was write, false: access was read. */
   bool user;         /* True: access by user, false: access by kernel. */
+
   void *fault_addr;  /* Fault address. */
+  void *new_page;
+  void *victim;
+  struct thread *t = thread_current(), *owner;
 
   /* Obtain faulting address, the virtual address that was
      accessed to cause the fault.  It may point to code or to
@@ -147,15 +159,54 @@ page_fault (struct intr_frame *f)
   not_present = (f->error_code & PF_P) == 0;
   write = (f->error_code & PF_W) != 0;
   user = (f->error_code & PF_U) != 0;
-
+  
   /* To implement virtual memory delete the rest of the function
      body, and replace it with code that brings in the page to
      which fault_addr refers. */
-  printf ("Page fault at %p: %s error %s page in %s context.\n",
-          fault_addr,
-          not_present ? "not present" : "rights violation",
-          write ? "writing" : "reading",
-          user ? "user" : "kernel");
-  kill (f);
+  
+  if (!user)
+  {
+    //kernel Pannic??
+    printf("Violation : Access to Kernel Space.\n");
+    intr_dump_frame (f);
+    thread_exit (); 
+    return;
+  }
+  else if(!not_present)
+  {
+    printf("Violation : Access Denied.\n");
+    kill(f);
+    return;
+  }
+  else if(!is_user_vaddr(fault_addr))
+  {
+    printf("Violation : Access Kernel Address.\n");
+    kill(f);
+    return;
+  }
+  else if(swap_is_in_swap_table(fault_addr))
+  {
+    if ((new_page = palloc_get_page(PAL_USER | PAL_ZERO)) == NULL)
+    {
+      victim = select_victim_page(&owner);
+      swap_swap_out(owner, victim);
+      
+    }
+    swap_swap_in(fault_addr);
+    return;
+  }
+  else if((uintptr_t)fault_addr < f->esp)
+  {
+    kill(f);
+    return;
+  }
+  else if((new_page = palloc_get_page(PAL_USER | PAL_ZERO)) == NULL)
+  {
+    victim = select_victim_page(&owner);
+    swap_swap_out(owner, victim);
+    
+    new_page = palloc_get_page(PAL_USER | PAL_ZERO);
+  }
+  pagedir_set_page(t->pagedir, (void *)(pg_no(fault_addr) << PGBITS), new_page, write);
 }
 

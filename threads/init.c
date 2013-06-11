@@ -36,6 +36,10 @@
 #include "filesys/fsutil.h"
 #endif
 
+#ifdef VM
+#include "vm/frame.h"
+#endif
+
 /* Amount of physical memory, in 4 kB pages. */
 size_t ram_pages;
 
@@ -92,6 +96,10 @@ main (void)
   malloc_init ();
   paging_init ();
 
+#ifdef VM
+  frame_init ();
+#endif
+
   /* Segmentation. */
 #ifdef USERPROG
   tss_init ();
@@ -107,7 +115,7 @@ main (void)
   exception_init ();
   syscall_init ();
 #endif
-
+  
   /* Start thread scheduler and enable interrupts. */
   thread_start ();
   serial_init_queue ();
@@ -118,6 +126,7 @@ main (void)
   disk_init ();
   filesys_init (format_filesys);
 #endif
+  swap_swap_disk_init();
 
   printf ("Boot complete.\n");
   

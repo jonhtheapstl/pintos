@@ -4,6 +4,7 @@
 #include <debug.h>
 #include <list.h>
 #include <stdint.h>
+#include "synch.h"
 #include "filesys/file.h"
 
 /* States in a thread's life cycle. */
@@ -12,7 +13,7 @@ enum thread_status
     THREAD_RUNNING,     /* Running thread. */
     THREAD_READY,       /* Not running but ready to run. */
     THREAD_BLOCKED,     /* Waiting for an event to trigger. */
-    THREAD_DYING        /* About to be destroyed. */
+    THREAD_DYING,       /* About to be destroyed. */
   };
 
 /* Thread identifier type.
@@ -107,6 +108,13 @@ struct thread
     /* Owned by userprog/process.c. */
     uint32_t *pagedir;                  /* Page directory. */
     struct list open_file_list;        /* open file descriptor */
+
+	struct thread *parent;
+	struct list children;
+	struct list_elem siblings;
+
+	struct semaphore sync_for_parent; 	/* Used by child to wait for a parent. */
+	struct semaphore sync_for_child; 	/* Used by parent to wait for a child. */
 #endif
 
     /* Owned by thread.c. */

@@ -1,6 +1,7 @@
 #include "userprog/process.h"
 #include <debug.h>
 #include <inttypes.h>
+#include <list.h>
 #include <round.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -17,6 +18,7 @@
 #include "threads/palloc.h"
 #include "threads/thread.h"
 #include "threads/vaddr.h"
+#include "vm/swap.h"
 
 static thread_func start_process NO_RETURN;
 static bool load (const char *cmdline, void (**eip) (void), void **esp);
@@ -42,6 +44,7 @@ process_execute (const char *file_name)
   tid = thread_create (file_name, PRI_DEFAULT, start_process, fn_copy);
   if (tid == TID_ERROR)
     palloc_free_page (fn_copy); 
+
   return tid;
 }
 
@@ -69,10 +72,7 @@ start_process (void *file_name_)
   length = argument_parsing(file_name_, if_.esp);
   if_.esp = if_.esp - length;
   memcpy(if_.esp, file_name_, length);
-#ifdef DEBUG4
-  hex_dump(0, if_.esp, length, 1);
-  printf("esp = %x\n", if_.esp);
-#endif
+
   /* If load failed, quit. */
   palloc_free_page (file_name_);
   if (!success) 
@@ -91,44 +91,53 @@ start_process (void *file_name_)
 static int argument_parsing (char *buffer, char *esp)
 {
   int i = 0, j = 0, inQuotes = 0, space = 0, argc = 0;
-  unsigned int alignments, offset, length, src_length = strnlen(buffer, LOADER_ARGS_LEN), x, y;
+  unsigned int alignments, offset, length, start_string = 0, 
+               src_length = strnlen(buffer, LOADER_ARGS_LEN), x, y;
 
   /* 1. Change spaces to '\0' and count argument counts.
         - Ignore countinuous spaces and spaces in Quotes.
         - Count '\0' conversions. (counts + 1) will be same as argc. */
   while(i < src_length)
   {
-    switch(*(buffer + i))
+    if (!start_string && *(buffer + i) != ' ') 
     {
-      case '\"':
+      start_string = 1;
+    }
+    
+    if (start_string)
+    {
+      switch(*(buffer + i))
       {
-        inQuotes = !inQuotes;
-        space = 0;
-        break;
-      }
-      case ' ':
-      {
-        if (!inQuotes && !space)
+        case '\"':
         {
-          *(buffer + j) = '\0';
-          argc++;
+          inQuotes = !inQuotes;
+          break;
+        }
+        case ' ':
+        {
+          if (!inQuotes && !space)
+          {
+            *(buffer + j) = '\0';
+            argc++;
+            j++;
+          }
+          else if(inQuotes)
+          {
+            *(buffer + j) = ' ';
+            j++;
+          }
+          space = 1;
+          break;
+        }
+        default:
+        {
+          space = 0;
+          *(buffer + j) = *(buffer + i);
           j++;
         }
-        else if(inQuotes)
-        {
-          *(buffer + j) = ' ';
-          j++;
-        }
-        space = 1;
-        break;
-      }
-      default:
-      {
-        space = 0;
-        *(buffer + j) = *(buffer + i);
-        j++;
       }
     }
+    
     i++;
   }
 
@@ -143,8 +152,8 @@ static int argument_parsing (char *buffer, char *esp)
   offset = alignments + 4 * ( argc + 4 );
   length = j + offset;
   
-  for (i = offset ; i < length ; i++) *(buffer + i) = *(buffer + i - offset);
-  for (i = 0 ; i < offset ; i++) *(buffer + i) = 0;
+  for (i = length - 1 ; i >= offset ; i--) *(buffer + i) = *(buffer + i - offset);
+  for (i = offset - 1 ; i >= 0 ; i--) *(buffer + i) = 0;
 
   /* return address */
   *(unsigned int *)buffer = 0;
@@ -178,9 +187,29 @@ static int argument_parsing (char *buffer, char *esp)
    This function will be implemented in problem 2-2.  For now, it
    does nothing. */
 int
-process_wait (tid_t child_tid UNUSED) 
+process_wait (tid_t child_tid)
 {
-  return -1;
+	struct thread *cur = thread_current ();
+	struct thread *child;
+	struct list_elem *index;
+	
+	printf("thread: %s wait for process_wait(%d)...\n",cur->name, child_tid);
+
+	//lock accquire
+	for (index = list_begin(&cur->children); index != list_end(&cur->children); index = list_next(index))
+  {
+		child = list_entry(index, struct thread, siblings);
+		
+		if (child->tid == child_tid)
+    {
+			sema_down(&child->sync_for_child);
+      return child->status;
+		}
+	}
+	//lock release
+
+	// must return exit code
+	return -1;
 }
 
 /* Free the current process's resources. */
@@ -189,12 +218,24 @@ process_exit (void)
 {
   struct thread *cur = thread_current ();
   uint32_t *pd;
+	
+  if (cur->parent != NULL)
+    list_remove (&cur->siblings);
+  
+  while(!list_empty(&cur->open_file_list))
+  {
+    file_close_with_list_elem(list_pop_front(&cur->open_file_list));
+    
+  }  
+	sema_up(&cur->sync_for_child);
 
   /* Destroys the current process's page directory and switch back
      to the kernel-only page directory. */
   pd = cur->pagedir;
   if (pd != NULL) 
     {
+      swap_release_swaped_page_of(cur->tid);
+      swap_print_stats();
       /* Correct ordering here is crucial.  We must set
          cur->pagedir to NULL before switching page directories,
          so that a timer interrupt can't switch back to the
@@ -203,6 +244,7 @@ process_exit (void)
          directory, or our active page directory will be one
          that's been freed (and cleared). */
       cur->pagedir = NULL;
+      remove_pagedir(cur);
       pagedir_activate (NULL);
       pagedir_destroy (pd);
     }
@@ -311,6 +353,10 @@ load (const char *file_name, void (**eip) (void), void **esp)
   t->pagedir = pagedir_create ();
   if (t->pagedir == NULL) 
     goto done;
+
+  // add to pagedir_list
+  add_pagedir(t);
+
   process_activate ();
 
   /* Open executable file. */
@@ -320,6 +366,8 @@ load (const char *file_name, void (**eip) (void), void **esp)
     printf ("load: %s: open failed\n", file_name);
     goto done; 
   }
+  
+  file_deny_write(file);
 
   /* Read and verify executable header. */
   if (file_read (file, &ehdr, sizeof ehdr) != sizeof ehdr
@@ -404,6 +452,7 @@ load (const char *file_name, void (**eip) (void), void **esp)
 
 done:
   /* We arrive here whether the load is successful or not. */
+  if (file != NULL) file_allow_write(file);
   file_close (file);
   return success;
 }
@@ -529,7 +578,7 @@ setup_stack (void **esp)
   {
     success = install_page (((uint8_t *) PHYS_BASE) - PGSIZE, kpage, true);
     if (success)
-      *esp = PHYS_BASE - 12;
+      *esp = PHYS_BASE;
     else
       palloc_free_page (kpage);
   }

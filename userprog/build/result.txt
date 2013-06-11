@@ -1,0 +1,12 @@
+Kernel command line: run 'echo iX  yzKv CUSUmbrt "" qJHHOKa'
+Pintos booting with 4,096 kB RAM...
+372 pages available========================================================================
+                       Bochs x86 Emulator 2.4.5
+              Build from CVS snapshot, on April 25, 2010
+========================================================================
+00012"
+Boot complete.
+Executing 'echo iX  yzKv CUSUmbrt "" qJHHOKa':
+Execution of 'echo iX  yzKv CUSUmbrt "" qJHHOKa' complete.
+echo iX yzKv CUSUmbrt  qJHHOKa 
+(echo iX  yzKv C) EXIT : EXIT_SUCCESS

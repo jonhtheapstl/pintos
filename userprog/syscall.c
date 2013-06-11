@@ -1,3 +1,4 @@
+#include "userprog/pagedir.h"
 #include "userprog/process.h"
 #include "userprog/syscall.h"
 #include <stdio.h>
@@ -5,6 +6,7 @@
 #include <console.h>
 #include "threads/interrupt.h"
 #include "threads/thread.h"
+#include "threads/vaddr.h"
 #include "filesys/file.h"
 #include "filesys/filesys.h"
 #include "devices/input.h"
@@ -33,6 +35,8 @@ static void sys_readdir (struct intr_frame *);
 static void sys_isdir (struct intr_frame *);
 static void sys_inumber (struct intr_frame *);
 
+static void *is_valid_virtual_address(const void *);
+
 static void (*syscall_table[SYS_LAST])(struct intr_frame *f_) =
 { /* Projects 2 and later. */
   /* 0 : SYS_HALT */      sys_halt,       /* Halt the operating system. */
@@ -45,20 +49,20 @@ static void (*syscall_table[SYS_LAST])(struct intr_frame *f_) =
   /* 7 : SYS_FILESIZE */  sys_filesize,       /* Obtain a file's size. */
   /* 8 : SYS_READ */      sys_read,       /* Read from a file. */
   /* 9 : SYS_WRITE */     sys_write,       /* Write to a file. */
-  /* 10 : SYS_SEEK */      sys_write,       /* Change position in a file. */
-  /* 11 : SYS_TELL */      sys_tell,       /* Report current position in a file. */
-  /* 12 : SYS_CLOSE */     sys_close,       /* Close a file. */
+  /* 10 : SYS_SEEK */     sys_seek,       /* Change position in a file. */
+  /* 11 : SYS_TELL */     sys_tell,       /* Report current position in a file. */
+  /* 12 : SYS_CLOSE */    sys_close,       /* Close a file. */
 
   /* Project 3 and optionally project 4. */
-  /* SYS_MMAP */      sys_mmap,       /* Map a file into memory. */
-  /* SYS_MUNMAP */    sys_munmap,       /* Remove a memory mapping. */
+  /* 13 : SYS_MMAP */     sys_mmap,       /* Map a file into memory. */
+  /* 14: SYS_MUNMAP */    sys_munmap,       /* Remove a memory mapping. */
 
   /* Project 4 only. */
-  /* SYS_CHDIR */     sys_chdir,       /* Change the current directory. */
-  /* SYS_MKDIR */     sys_mkdir,       /* Create a directory. */
-  /* SYS_READDIR */   sys_readdir,       /* Reads a directory entry. */
-  /* SYS_ISDIR */     sys_isdir,       /* Tests if a fd represents a directory. */
-  /* SYS_INUMBER */   sys_inumber,       /* Returns the inode number for a fd. */
+  /* 15 : SYS_CHDIR */    sys_chdir,       /* Change the current directory. */
+  /* 16 : SYS_MKDIR */    sys_mkdir,       /* Create a directory. */
+  /* 17 : SYS_READDIR */  sys_readdir,       /* Reads a directory entry. */
+  /* 18 : SYS_ISDIR */    sys_isdir,       /* Tests if a fd represents a directory. */
+  /* 19 : SYS_INUMBER */  sys_inumber,       /* Returns the inode number for a fd. */
 };
 
 
@@ -86,35 +90,40 @@ static void sys_exit(struct intr_frame *f_)
   unsigned int *esp = f_->esp;
   int status = *(esp + 1);
   struct thread *t = thread_current();
-  printf("(%s) EXIT : %s\n", t->name, status ? "EXIT_FAILURE" :  "EXIT_SUCCESS");
+  printf("%s:exit(%d)\n", t->name, status);
   thread_exit ();
 }
 
 static void sys_exec(struct intr_frame *f_)
 {
   unsigned int *esp = f_->esp;
-  const char *file = *(esp + 1);
+  const char *file = is_valid_virtual_address(*(esp + 1));
   
   f_->eax = process_execute(file);
 }
 
 static void sys_wait(struct intr_frame *f_)
 {
+  unsigned int *esp = f_->esp;
+  int pid = *(esp + 1);
+  
+  f_->eax = process_wait(pid);
 }
 
 static void sys_create(struct intr_frame *f_)
 {
   unsigned int *esp = f_->esp;
-  char *file = *(esp + 1);
+  char *file = is_valid_virtual_address(*(esp + 1));
   unsigned int initial_size = *(esp + 2);
   
-  f_->eax = filesys_create(file, initial_size);
+  if (initial_size < 0) f_->eax = -1;
+  else f_->eax = filesys_create(file, initial_size);
 }
 
 static void sys_remove(struct intr_frame *f_)
 {
   unsigned int *esp = f_->esp;
-  char *file = *(esp + 1);
+  char *file = is_valid_virtual_address(*(esp + 1));
   
   f_->eax = filesys_remove(file);
 }
@@ -122,7 +131,7 @@ static void sys_remove(struct intr_frame *f_)
 static void sys_open(struct intr_frame *f_)
 {
   unsigned int *esp = f_->esp;
-  char *file = *(esp + 1);
+  char *file = is_valid_virtual_address(*(esp + 1));
   struct file *f = filesys_open(file);
     
   if (f == NULL) f_->eax = -1;
@@ -146,7 +155,7 @@ static void sys_read(struct intr_frame *f_)
 {
   unsigned int *esp = f_->esp;
   int fd = *(esp + 1);
-  char *buffer = *(esp + 2);
+  char *buffer = is_valid_virtual_address(*(esp + 2));
   unsigned int size = *(esp + 3);
   struct file *f;
   
@@ -164,7 +173,7 @@ static void sys_write(struct intr_frame *f_)
 {
   unsigned int *esp = f_->esp;
   int fd = *(esp + 1);
-  char *buffer = *(esp + 2);
+  char *buffer = is_valid_virtual_address(*(esp + 2));
   unsigned int size = *(esp + 3);
   struct file *f;
   
@@ -227,3 +236,7 @@ static void sys_inumber(struct intr_frame *f_)
 {
 }
 
+static void *is_valid_virtual_address(const void *addr)
+{
+  return (is_user_vaddr(addr) && pagedir_get_page(thread_current()->pagedir, addr)) ? addr : NULL;
+}

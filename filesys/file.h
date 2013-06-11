@@ -2,6 +2,7 @@
 #define FILESYS_FILE_H
 
 #include "filesys/off_t.h"
+#include <list.h>
 
 /* Project 4 */
 typedef int32_t fid_t;
@@ -33,5 +34,6 @@ off_t file_length (struct file *);
 fid_t file_insert_in_fd (struct file *file);
 struct file *file_search_in_fd (int fd);
 void file_remove_in_fd (int fd);
+void file_close_with_list_elem (struct list_elem *);
 
 #endif /* filesys/file.h  */

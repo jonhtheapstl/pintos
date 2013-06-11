@@ -29,7 +29,7 @@
 00000000000i[     ]   SB16 support: no
 00000000000i[     ]   USB support: no
 00000000000i[     ]   VGA extension support: vbe 
-00000000000i[MEM0 ] allocated memory at 0xb6e92008. after alignment, vector=0xb6e93000
+00000000000i[MEM0 ] allocated memory at 0xb6dd4008. after alignment, vector=0xb6dd5000
 00000000000i[MEM0 ] 4.00MB
 00000000000i[MEM0 ] mem block size = 0x00100000, blocks=4
 00000000000i[MEM0 ] rom at 0xfffe0000/131072 ('/usr/local/share/bochs/BIOS-bochs-latest')
@@ -56,7 +56,7 @@
 00000000000i[     ] init_dev of 'keyboard' plugin device by virtual method
 00000000000i[KBD  ] will paste characters every 1000 keyboard ticks
 00000000000i[     ] init_dev of 'harddrv' plugin device by virtual method
-00000000000i[HD   ] HD on ata0-0: '/tmp/_ZZ5kAjBgz.dsk' 'flat' mode 
+00000000000i[HD   ] HD on ata0-0: '/tmp/IkwlwYqi9X.dsk' 'flat' mode 
 00000000000i[HD   ] HD on ata0-1: 'fs.dsk' 'flat' mode 
 00000000000i[HD   ] Using boot sequence disk, none, none
 00000000000i[HD   ] Floppy boot signature check is enabled
@@ -113,26 +113,26 @@
 00000814553i[BIOS ] ata0-0: PCHS=1/16/63 translation=none LCHS=1/16/63
 00000872573i[BIOS ] ata0-1: PCHS=4/16/63 translation=none LCHS=4/16/63
 00003983798i[BIOS ] Booting from 0000:7c00
-00161500000p[XGUI ] >>PANIC<< POWER button turned off.
-00161500000i[CPU0 ] CPU is in protected mode (halted)
-00161500000i[CPU0 ] CS.d_b = 32 bit
-00161500000i[CPU0 ] SS.d_b = 32 bit
-00161500000i[CPU0 ] | EAX=c011b000  EBX=00000000  ECX=00000009  EDX=00000000
-00161500000i[CPU0 ] | ESP=c011af98  EBP=c011afc0  ESI=00000000  EDI=00000000
-00161500000i[CPU0 ] | IOPL=0 id vip vif ac vm rf nt of df IF tf sf ZF af PF cf
-00161500000i[CPU0 ] | SEG selector     base    limit G D
-00161500000i[CPU0 ] | SEG sltr(index|ti|rpl)     base    limit G D
-00161500000i[CPU0 ] |  CS:0008( 0001| 0|  0) 00000000 ffffffff 1 1
-00161500000i[CPU0 ] |  DS:0010( 0002| 0|  0) 00000000 ffffffff 1 1
-00161500000i[CPU0 ] |  SS:0010( 0002| 0|  0) 00000000 ffffffff 1 1
-00161500000i[CPU0 ] |  ES:0010( 0002| 0|  0) 00000000 ffffffff 1 1
-00161500000i[CPU0 ] |  FS:0023( 0004| 0|  3) 00000000 ffffffff 1 1
-00161500000i[CPU0 ] |  GS:0023( 0004| 0|  3) 00000000 ffffffff 1 1
-00161500000i[CPU0 ] | EIP=c0101098 (c0101098)
-00161500000i[CPU0 ] | CR0=0xe0010015 CR2=0x00000000
-00161500000i[CPU0 ] | CR3=0x00117000 CR4=0x00000000
-00161500000i[CPU0 ] 0xc0101098>> jmp .-14 (0xc010108c) : EBF2
-00161500000i[CMOS ] Last time is 161 (Thu Jan  1 09:02:41 1970)
-00161500000i[XGUI ] Exit
-00161500000i[     ] restoring default signal behavior
-00161500000i[CTRL ] quit_sim called with exit code 1
+00316400000p[XGUI ] >>PANIC<< POWER button turned off.
+00316400000i[CPU0 ] CPU is in protected mode (halted)
+00316400000i[CPU0 ] CS.d_b = 32 bit
+00316400000i[CPU0 ] SS.d_b = 32 bit
+00316400000i[CPU0 ] | EAX=c011b000  EBX=00000000  ECX=00000012  EDX=00000000
+00316400000i[CPU0 ] | ESP=c011af98  EBP=c011afc0  ESI=00000000  EDI=00000000
+00316400000i[CPU0 ] | IOPL=0 id vip vif ac vm rf nt of df IF tf sf ZF af PF cf
+00316400000i[CPU0 ] | SEG selector     base    limit G D
+00316400000i[CPU0 ] | SEG sltr(index|ti|rpl)     base    limit G D
+00316400000i[CPU0 ] |  CS:0008( 0001| 0|  0) 00000000 ffffffff 1 1
+00316400000i[CPU0 ] |  DS:0010( 0002| 0|  0) 00000000 ffffffff 1 1
+00316400000i[CPU0 ] |  SS:0010( 0002| 0|  0) 00000000 ffffffff 1 1
+00316400000i[CPU0 ] |  ES:0010( 0002| 0|  0) 00000000 ffffffff 1 1
+00316400000i[CPU0 ] |  FS:0023( 0004| 0|  3) 00000000 ffffffff 1 1
+00316400000i[CPU0 ] |  GS:0023( 0004| 0|  3) 00000000 ffffffff 1 1
+00316400000i[CPU0 ] | EIP=c01010d3 (c01010d3)
+00316400000i[CPU0 ] | CR0=0xe0010015 CR2=0x00000000
+00316400000i[CPU0 ] | CR3=0x00117000 CR4=0x00000000
+00316400000i[CPU0 ] 0xc01010d3>> jmp .-14 (0xc01010c7) : EBF2
+00316400000i[CMOS ] Last time is 316 (Thu Jan  1 09:05:16 1970)
+00316400000i[XGUI ] Exit
+00316400000i[     ] restoring default signal behavior
+00316400000i[CTRL ] quit_sim called with exit code 1
